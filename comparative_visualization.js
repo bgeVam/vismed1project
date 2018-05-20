@@ -1,35 +1,46 @@
 /* globals dat, AMI*/
 
-// Setup renderer
-var container = document.getElementById('container');
-var renderer = new THREE.WebGLRenderer({
+// Setup renderer left
+var container_left = document.getElementById('container_left');
+var renderer_left = new THREE.WebGLRenderer({
     antialias: true
 });
-renderer.setSize(container.offsetWidth, container.offsetHeight);
-renderer.setClearColor(0x353535, 1);
-renderer.setPixelRatio(window.devicePixelRatio);
-container.appendChild(renderer.domElement);
+renderer_left.setSize(container_left.offsetWidth, container_left.offsetHeight);
+renderer_left.setClearColor(0x353535, 1);
+renderer_left.setPixelRatio(window.devicePixelRatio);
+container_left.appendChild(renderer_left.domElement);
+
+// Setup renderer left
+var container_right = document.getElementById('container_right');
+var renderer_right = new THREE.WebGLRenderer({
+    antialias: true
+});
+renderer_right.setSize(container_right.offsetWidth, container_right.offsetHeight);
+renderer_right.setClearColor(0x353535, 1);
+renderer_right.setPixelRatio(window.devicePixelRatio);
+container_right.appendChild(renderer_right.domElement);
 
 // Setup scene
 var scene = new THREE.Scene();
 
 // Setup camera
-var camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.01, 10000000);
+var camera = new THREE.PerspectiveCamera(45, container_left.offsetWidth / container_left.offsetHeight, 0.01, 10000000);
 camera.position.x = 150;
 camera.position.y = 150;
 camera.position.z = 100;
 
 // Setup controls
-var controls = new AMI.TrackballControl(camera, container);
-
+var controls_left = new AMI.TrackballControl(camera, container_left);
+var controls_right = new AMI.TrackballControl(camera, container_right);
 /**
  * Handle window resize
  */
 function onWindowResize() {
-    camera.aspect = container.offsetWidth / container.offsetHeight;
+    camera.aspect = container_left.offsetWidth / container_left.offsetHeight;
     camera.updateProjectionMatrix();
 
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
+    renderer_left.setSize(container_left.offsetWidth, container_left.offsetHeight);
+    renderer_right.setSize(container_right.offsetWidth, container_right.offsetHeight);
 }
 
 window.addEventListener('resize', onWindowResize, false);
@@ -94,9 +105,10 @@ function gui(stackHelper) {
  * Start animation loop
  */
 function animate() {
-    controls.update();
-    renderer.render(scene, camera);
-
+    controls_left.update();
+    controls_right.update();
+    renderer_left.render(scene, camera);
+    renderer_right.render(scene, camera);
     // request new frame
     requestAnimationFrame(function() {
         animate();
@@ -105,8 +117,8 @@ function animate() {
 animate();
 
 // Setup loader
-var loader = new AMI.VolumeLoader(container);
-
+var loader_left = new AMI.VolumeLoader(container_left);
+var loader_right = new AMI.VolumeLoader(container_right);
 var t2 = [
     '36444280',
     '36444294',
@@ -132,14 +144,14 @@ var files = t2.map(function(v) {
     return 'https://cdn.rawgit.com/FNNDSC/data/master/dicom/adi_brain/' + v;
 });
 
-loader
+loader_left
     .load(files)
     .then(function() {
         // merge files into clean series/stack/frame structure
-        var series = loader.data[0].mergeSeries(loader.data);
+        var series = loader_left.data[0].mergeSeries(loader_left.data);
         var stack = series[0].stack[0];
-        loader.free();
-        loader = null;
+        loader_left.free();
+        loader_left = null;
         // be carefull that series and target stack exist!
         var stackHelper = new AMI.StackHelper(stack);
         stackHelper.bbox.color = 0x8bc34a;
@@ -154,7 +166,21 @@ loader
         var centerLPS = stackHelper.stack.worldCenter();
         camera.lookAt(centerLPS.x, centerLPS.y, centerLPS.z);
         camera.updateProjectionMatrix();
-        controls.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
+        controls_left.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
+    })
+    .catch(function(error) {
+        window.console.log('oops... something went wrong...');
+        window.console.log(error);
+    });
+
+loader_right
+    .load(files)
+    .then(function() {
+        // merge files into clean series/stack/frame structure
+        var series = loader_right.data[0].mergeSeries(loader_right.data);
+        var stack = series[0].stack[0];
+        loader_right.free();
+        loader_right = null;
     })
     .catch(function(error) {
         window.console.log('oops... something went wrong...');

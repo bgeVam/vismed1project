@@ -4,21 +4,31 @@ body{
   background-color: #212121
 }
 
-#container {
-  background-color: #000;
-  left: 0;
-  right: 0;
+/* Split the screen in half */
+.split {
+  height: 100%;
+  width: 49%;
+  position: fixed;
+  z-index: 1;
   top: 0;
-  bottom: 0;
-  position: absolute;
-  width: 50%;
-  height: 50%;
-  overflow:hidden;
+  overflow: hidden;
+  padding-top: 20px;
+  background-color: #000;
+}
+
+/* Control the left side */
+.left {
+  left: 0;
+}
+
+/* Control the right side */
+.right {
+  right: 0;
 }
 
 #my-gui-container {
   position: fixed;
   top: 10px;
   right: 10px;
-  z-index:1;
+  z-index:2;
 }
