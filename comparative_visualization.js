@@ -120,28 +120,13 @@ animate();
 var loaderLeft = new AMI.VolumeLoader(containerLeft);
 var loaderRight = new AMI.VolumeLoader(containerRight);
 var t2 = [
-    '36444280',
-    '36444294',
-    '36444308',
-    '36444322',
-    '36444336',
-    '36444350',
-    '36444364',
-    '36444378',
-    '36444392',
-    '36444406',
-    '36444434',
-    '36444448',
-    '36444462',
-    '36444476',
-    '36444490',
-    '36444504',
-    '36444518',
-    '36444532',
-    '36746856'
+    '00000',
+    '00001',
+    '00002',
+    '00003'
 ];
 var files = t2.map(function(v) {
-    return 'https://cdn.rawgit.com/FNNDSC/data/master/dicom/adi_brain/' + v;
+    return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti/t1_icbm_normal_1mm_pn0_rf20.nii';
 });
 
 loaderLeft
