@@ -120,13 +120,11 @@ animate();
 var loaderLeft = new AMI.VolumeLoader(containerLeft);
 var loaderRight = new AMI.VolumeLoader(containerRight);
 var t2 = [
-    '00000',
-    '00001',
-    '00002',
-    '00003'
+    'slice_40',
+    'slice_41'
 ];
 var files = t2.map(function(v) {
-    return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti/t1_icbm_normal_1mm_pn0_rf20.nii';
+    return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti/' + v + '.nii';
 });
 
 loaderLeft
