@@ -303,7 +303,7 @@ var t2 = [
 '180'
 ];
 var files = t2.map(function(v) {
-    return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/pd_icbm_normal_1mm_pn0_rf20/' + v + '.nii';
+    return 'data/pd_icbm_normal_1mm_pn0_rf20/' + v + '.nii';
 });
 
 loaderLeft
