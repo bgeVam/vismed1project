@@ -302,8 +302,10 @@ var t2 = [
 '179',
 '180'
 ];
-var files = t2.map(function(v) {
-    return 'data/pd_icbm_normal_1mm_pn0_rf20/' + v + '.nii';
+
+var t3 = [''];
+var files = t3.map(function(v) {
+    return 'data/nifti/t1_icbm_normal_1mm_pn0_rf20.nii';
 });
 
 loaderLeft
