@@ -68,8 +68,6 @@ EOF
 )
 }
 
-git checkout -b download_image_data
-
 for ((a=0;a<${#modalities[@]};++a)); do
     for ((b=0;b<${#thicknesses[@]};++b)); do
         for ((c=0;c<${#noises[@]};++c)); do
@@ -80,6 +78,7 @@ for ((a=0;a<${#modalities[@]};++a)); do
                 rm $base_filename.mnc
                 git add nifti/$base_filename.nii
                 git commit -m "Add $base_filename.nii to data"
+                git push origin master
             done
         done
     done
