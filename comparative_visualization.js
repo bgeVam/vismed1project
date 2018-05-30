@@ -124,7 +124,7 @@ var t2 = [
 ];
 
 var files = t2.map(function(v) {
-    return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti/T1_1mm_pn0_rf0.nii';
+    return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti_normal/PD_1mm_pn0_rf0.nii';
 });
 
 loaderLeft
