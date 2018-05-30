@@ -1,7 +1,7 @@
 /* globals Stats, dat*/
 
 //import './cameras.orthographic';
-import ControlsOrthographic from 'src/controls/controls.trackballortho';
+import ControlsOrthographic from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/controls/controls.trackballortho.js';
 import HelpersLut from 'base/helpers/helpers.lut';
 import HelpersStack from 'base/helpers/helpers.stack';
 import LoadersVolume from 'base/loaders/loaders.volume';
