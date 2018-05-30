@@ -1,5 +1,15 @@
 #!/bin/bash
-
+# 
+#
+#
+# This script is used to automatically download brain image data from the website brainweb.
+# The script iterates over all available options on brainweb, downloads the corresponding
+# image via CURL and converts it to nifti using mnc2nii. When this process is complete the 
+# image is commited in a single commit to the github repository in order to maintain a 
+# step-by-step progress of the image data in the repository.
+#
+#
+#
 # Modality
 #  * T1 (Longitudinal Relaxation Time)
 #      Tissue with high water content will appear darker (fat, edema)
@@ -33,9 +43,17 @@ noises=( "pn0" "pn1" "pn3" "pn5" "pn7" "pn9" )
 #  * 40%
 rfs=( "rf0" "rf20" "rf40" )
 
-# Static values
-PROTOCOL="ICBM"
-PHANTOM_NAME="normal"
+# Normal Brain Data
+# PROTOCOL="ICBM"
+# PHANTOM_NAME="normal"
+# SITE="brainweb1"
+
+# MS Brain Data
+PROTOCOL="AI"
+PHANTOM_NAME="msles2"
+SITE="brainweb2"
+
+# Static Values
 FORMAT="minc"
 ZIP_VALUE="none"
 DOWNLOAD_FOR_REAL="%5BStart+download5D"
@@ -53,7 +71,7 @@ function download_mnc_file {
 	rf=$4
 	base_filename=$modality"_"$thickness"_"$noise"_"$rf
 
-	curl -o "$base_filename.mnc" -X POST 'http://brainweb.bic.mni.mcgill.ca/cgi/brainweb1' \
+curl -o "$base_filename.mnc" -X POST "http://brainweb.bic.mni.mcgill.ca/cgi/$SITE" \
 --data $(cat <<EOF
 do_download_alias=$modality\
 +$PROTOCOL\
@@ -68,16 +86,18 @@ EOF
 )
 }
 
+
 for ((a=0;a<${#modalities[@]};++a)); do
     for ((b=0;b<${#thicknesses[@]};++b)); do
         for ((c=0;c<${#noises[@]};++c)); do
             for ((d=0;d<${#rfs[@]};++d)); do
                 echo "##########   Get Image Data for " "Modality: ${modalities[a]}" "Thickness: ${thicknesses[b]}" "Noise: ${noises[c]}" "RF: ${rfs[d]}" "    ################"
                 download_mnc_file "${modalities[a]}" "${thicknesses[b]}" "${noises[c]}" "${rfs[d]}"
-                mnc2nii $base_filename.mnc nifti/$base_filename.nii
+                mnc2nii $base_filename.mnc nifti_lesion/$base_filename.nii
                 rm $base_filename.mnc
-                git add nifti/$base_filename.nii
-                git commit -m "Add $base_filename.nii to data"
+                git add nifti_lesion/$base_filename.nii
+                git commit -m "Add $base_filename.nii to lesion data"
+                git update-index --assume-unchanged nifti_lesion/$base_filename.nii
                 git push origin master
             done
         done
