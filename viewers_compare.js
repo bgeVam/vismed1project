@@ -1,17 +1,17 @@
 /* globals Stats, dat*/
 
-//import './cameras.orthographic';
+import CamerasOrthographic from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/cameras/cameras.orthographic.js';
 import ControlsOrthographic from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/controls/controls.trackballortho.js';
-import HelpersLut from 'base/helpers/helpers.lut';
-import HelpersStack from 'base/helpers/helpers.stack';
-import LoadersVolume from 'base/loaders/loaders.volume';
+import HelpersLut from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/helpers/helpers.lut.js';
+import HelpersStack from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/helpers/helpers.stack.js';
+import LoadersVolume from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/loaders/loaders.volume.js';
 
-import ShadersLayerUniform from 'base/shaders/shaders.layer.uniform';
-import ShadersLayerVertex from 'base/shaders/shaders.layer.vertex';
-import ShadersLayerFragment from 'base/shaders/shaders.layer.fragment';
-import ShadersUniform from 'base/shaders/shaders.data.uniform';
-import ShadersVertex from 'base/shaders/shaders.data.vertex';
-import ShadersFragment from 'base/shaders/shaders.data.fragment';
+import ShadersLayerUniform from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/shaders/shaders.layer.uniform.js';
+import ShadersLayerVertex from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/shaders/shaders.layer.vertex.js';
+import ShadersLayerFragment from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/shaders/shaders.layer.fragment.js';
+import ShadersUniform from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/shaders/shaders.data.uniform.js';
+import ShadersVertex from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/shaders/shaders.data.vertex.js';
+import ShadersFragment from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/shaders/shaders.data.fragment.js';
 
 // standard global letiables
 let controls;
