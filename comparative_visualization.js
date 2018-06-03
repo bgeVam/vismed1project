@@ -57,7 +57,7 @@ function gui(stackHelper) {
     customContainer.appendChild(gui.domElement);
 
     // stack
-    var stackFolder = gui.addFolder('Stack');
+    var stackFolder = gui.addFolder('Slice');
     // index range depends on stackHelper orientation.
     var index = stackFolder
         .add(stackHelper, 'index', 0, stack.dimensionsIJK.z - 1)
@@ -75,7 +75,7 @@ function gui(stackHelper) {
     stackFolder.open();
 
     // slice
-    var sliceFolder = gui.addFolder('Slice');
+    var sliceFolder = gui.addFolder('Image');
     sliceFolder
         .add(stackHelper.slice, 'windowWidth', 1, stack.minMax[1] - stack.minMax[0])
         .step(1)
@@ -91,14 +91,18 @@ function gui(stackHelper) {
     // bbox
     var bboxFolder = gui.addFolder('Bounding Box');
     bboxFolder.add(stackHelper.bbox, 'visible');
-    bboxFolder.addColor(stackHelper.bbox, 'color');
+    //bboxFolder.addColor(stackHelper.bbox, 'color');
     bboxFolder.open();
 
     // border
     var borderFolder = gui.addFolder('Border');
     borderFolder.add(stackHelper.border, 'visible');
-    borderFolder.addColor(stackHelper.border, 'color');
+    //borderFolder.addColor(stackHelper.border, 'color');
     borderFolder.open();
+
+    // image settings
+    var settingsFolder = gui.addFolder('Settings');
+    settingsFolder.open();
 }
 
 /**
