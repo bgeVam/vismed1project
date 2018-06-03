@@ -7,7 +7,7 @@ body{
 /* Split the screen in half */
 .split {
   height: 100%;
-  width: 49%;
+  width: 100%;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -19,16 +19,22 @@ body{
 /* Control the left side */
 .left {
   left: 0;
+  width: 38%;
 }
 
 /* Control the right side */
 .right {
-  right: 0;
+  position: fixed;
+  right: 22%;
+  width: 38%;
 }
 
+/* Control the toolbox */
 #my-gui-container {
   position: fixed;
-  top: 10px;
-  right: 10px;
+  width: 22%;
+  right: 0;
+  top: 0;
   z-index:2;
+  background-color: #212121
 }
