@@ -156,32 +156,28 @@ function animate() {
 animate();
 
 // Setup loader
-var loaderLeft = new AMI.VolumeLoader(containerLeft);
-var loaderRight = new AMI.VolumeLoader(containerRight);
+var loader = new AMI.VolumeLoader(containerLeft);
 
-var filesLeft = 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti_normal/T2_9mm_pn0_rf0.nii';
-var filesRight = 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti_lesion/T2_9mm_pn0_rf0.nii';
+var images = [
+    'nifti_normal/T2_9mm_pn0_rf0.nii',//left  = normal
+    'nifti_lesion/T2_9mm_pn0_rf0.nii' //right = lesion
+];
+var files = images.map(function(v) {
+    return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
+});
 
-loaderLeft
-.load(filesLeft)
-.then(function() {
-    window.console.log('Done Loading Left');
-    loaderRight
-    .load(filesRight)
+
+loader
+    .load(files)
     .then(function() {
-        window.console.log('Done Loading Right');
-        
-        // merge files into clean series/stack/frame structure
-        var seriesLeft = loaderLeft.data[0].mergeSeries(loaderLeft.data);
-        var stackLeft = seriesLeft[0].stack[0];
-        loaderLeft.free();
-        loaderLeft = null;
 
-        // merge files into clean series/stack/frame structure
-        var seriesRight = loaderRight.data[0].mergeSeries(loaderRight.data);
-        var stackRight = seriesRight[0].stack[0];
-        loaderRight.free();
-        loaderRight = null;
+        var series = loader.data[0].mergeSeries(loader.data);
+        console.log("LEFT IS" + series[0]._seriesInstanceUID);
+        console.log("RIGHT IS" + series[1]._seriesInstanceUID);
+        var stackLeft = series[0].stack[0];
+        var stackRight = series[1].stack[0];
+        loader.free();
+        loader = null;
 
         // be carefull that series and target stack exist!
         var stackHelperLeft = new AMI.StackHelper(stackLeft);
@@ -197,7 +193,7 @@ loaderLeft
 
         if (stackLeft._dimensionsIJK.z != stackRight._dimensionsIJK.z)
         {
-         throw new Error("Image size does not match");
+            throw new Error("Image size does not match");
         }
         // build the gui
         gui(stackHelperLeft, stackHelperRight);
@@ -209,13 +205,6 @@ loaderLeft
         controlsLeft.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
     })
     .catch(function(error) {
-        window.console.log('Failed to load right');
+        window.console.log('Failed to load images');
         window.console.log(error);
     });
-})
-.catch(function(error) {
-    window.console.log('Failed to load left');
-    window.console.log(error);
-});
-
-
