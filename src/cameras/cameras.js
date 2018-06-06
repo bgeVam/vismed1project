@@ -1,4 +1,4 @@
-import Orthographic from './cameras.orthographic';
+import Orthographic from './cameras.orthographic.js';
 
 export {
   Orthographic as OrthographicCamera,

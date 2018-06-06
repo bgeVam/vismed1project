@@ -1,6 +1,6 @@
-import ShadersBase from '../shaders.base';
-import Unpack from '../helpers/shaders.helpers.unpack';
-import Texture3d from '../helpers/shaders.helpers.texture3d';
+import ShadersBase from '../shaders.base.js';
+import Unpack from '../helpers/shaders.helpers.unpack.js';
+import Texture3d from '../helpers/shaders.helpers.texture3d.js';
 
 
 class InterpolationIdentity extends ShadersBase {

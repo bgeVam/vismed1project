@@ -1,4 +1,4 @@
-import shadersInterpolation from './interpolation/shaders.interpolation';
+import shadersInterpolation from './interpolation/shaders.interpolation.js';
 
 export default class ShadersFragment {
   // pass uniforms object

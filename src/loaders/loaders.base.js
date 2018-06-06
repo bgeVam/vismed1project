@@ -1,6 +1,6 @@
 /** Imports **/
-import HelpersProgressBar from '../helpers/helpers.progressbar';
-import EventEmitter from 'events';
+import HelpersProgressBar from '../helpers/helpers.progressbar.js';
+import EventEmitter from 'events.js';
 
 /**
  *

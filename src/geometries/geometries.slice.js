@@ -1,7 +1,7 @@
 /** * Imports ***/
-import coreIntersections from '../core/core.intersections';
+import coreIntersections from '../core/core.intersections.js';
 
-import {Matrix4, Vector3} from 'three';
+import {Matrix4, Vector3} from 'three.js';
 /**
  *
  * It is typically used for creating an irregular 3D planar shape given a box and the cut-plane.

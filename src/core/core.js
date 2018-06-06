@@ -1,7 +1,7 @@
-import Colors from './core.colors';
-import Intersections from './core.intersections';
-import Validators from './core.validators';
-import Utils from './core.utils';
+import Colors from './core.colors.js';
+import Intersections from './core.intersections.js';
+import Validators from './core.validators.js';
+import Utils from './core.utils.js';
 
 export {
   Colors as ColorsCore,

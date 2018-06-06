@@ -1,7 +1,7 @@
-import Intersections from '../core/core.intersections';
-import Validators from '../core/core.validators';
+import Intersections from '../core/core.intersections.js';
+import Validators from '../core/core.validators.js';
 
-import {Matrix4, Vector3} from 'three';
+import {Matrix4, Vector3} from 'three.js';
 
 /**
  * Orthographic camera from THREE.JS with some extra convenience

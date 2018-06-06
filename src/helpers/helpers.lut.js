@@ -1,4 +1,4 @@
-import CoreUtils from '../core/core.utils';
+import CoreUtils from '../core/core.utils.js';
 
 /**
  * @module helpers/lut

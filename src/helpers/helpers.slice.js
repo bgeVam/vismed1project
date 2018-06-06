@@ -1,12 +1,12 @@
 /** * Imports ***/
-import GeometriesSlice from '../geometries/geometries.slice';
-import ShadersUniform from '../shaders/shaders.data.uniform';
-import ShadersVertex from '../shaders/shaders.data.vertex';
-import ShadersFragment from '../shaders/shaders.data.fragment';
+import GeometriesSlice from '../geometries/geometries.slice.js';
+import ShadersUniform from '../shaders/shaders.data.uniform.js';
+import ShadersVertex from '../shaders/shaders.data.vertex.js';
+import ShadersFragment from '../shaders/shaders.data.fragment.js';
 
-import HelpersMaterialMixin from '../helpers/helpers.material.mixin';
+import HelpersMaterialMixin from '../helpers/helpers.material.mixin.js';
 
-import {Color, Matrix4, Vector3, Vector4} from 'three';
+import {Color, Matrix4, Vector3, Vector4} from 'three.js';
 
 /**
  * @module helpers/slice

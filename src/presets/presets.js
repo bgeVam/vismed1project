@@ -1,4 +1,4 @@
-import Segmentation from './presets.segmentation';
+import Segmentation from './presets.segmentation.js';
 export {
     Segmentation as SegmentationPreset,
 };

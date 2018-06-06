@@ -1,10 +1,10 @@
-import Annotation from './widgets.annotation';
-import BiRuler from './widgets.biruler';
-import Handle from './widgets.handle';
-import Roi from './widgets.roi';
-import Ruler from './widgets.ruler';
-import VoxelProbe from './widgets.voxelProbe';
-import Angle from './widgets.angle';
+import Annotation from './widgets.annotation.js';
+import BiRuler from './widgets.biruler.js';
+import Handle from './widgets.handle.js';
+import Roi from './widgets.roi.js';
+import Ruler from './widgets.ruler.js';
+import VoxelProbe from './widgets.voxelProbe.js';
+import Angle from './widgets.angle.js';
 
 export {
     Annotation as AnnotationWidget,

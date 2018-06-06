@@ -1,5 +1,5 @@
-import ShadersBase from '../shaders.base';
-import InterpolationIdentity from './shaders.interpolation.identity';
+import ShadersBase from '../shaders.base.js';
+import InterpolationIdentity from './shaders.interpolation.identity.js';
 
 class InterpolationTrilinear extends ShadersBase {
   constructor() {

@@ -1,22 +1,22 @@
-import ContourUniform from './shaders.contour.uniform';
-import ContourFragment from './shaders.contour.fragment';
-import ContourVertex from './shaders.contour.vertex';
+import ContourUniform from './shaders.contour.uniform.js';
+import ContourFragment from './shaders.contour.fragment.js';
+import ContourVertex from './shaders.contour.vertex.js';
 
-import DataUniform from './shaders.data.uniform';
-import DataFragment from './shaders.data.fragment';
-import DataVertex from './shaders.data.vertex';
+import DataUniform from './shaders.data.uniform.js';
+import DataFragment from './shaders.data.fragment.js';
+import DataVertex from './shaders.data.vertex.js';
 
-import VRUniform from './shaders.vr.uniform';
-import VRFragment from './shaders.vr.fragment';
-import VRVertex from './shaders.vr.vertex';
+import VRUniform from './shaders.vr.uniform.js';
+import VRFragment from './shaders.vr.fragment.js';
+import VRVertex from './shaders.vr.vertex.js';
 
-import LayerUniform from './shaders.layer.uniform';
-import LayerFragment from './shaders.layer.fragment';
-import LayerVertex from './shaders.layer.vertex';
+import LayerUniform from './shaders.layer.uniform.js';
+import LayerFragment from './shaders.layer.fragment.js';
+import LayerVertex from './shaders.layer.vertex.js';
 
-import LocalizerUniform from './shaders.localizer.uniform';
-import LocalizerFragment from './shaders.localizer.fragment';
-import LocalizerVertex from './shaders.localizer.vertex';
+import LocalizerUniform from './shaders.localizer.uniform.js';
+import LocalizerFragment from './shaders.localizer.fragment.js';
+import LocalizerVertex from './shaders.localizer.vertex.js';
 
 export {
     ContourUniform as ContourUniformShader,

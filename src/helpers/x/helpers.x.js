@@ -1,8 +1,8 @@
-import Interactor from './helpers.x.interactor';
-import Mesh from './helpers.x.mesh';
-import Renderer3D from './helpers.x.renderer3d';
-import Renderer2D from './helpers.x.renderer2d';
-import Volume from './helpers.x.volume';
+import Interactor from './helpers.x.interactor.js';
+import Mesh from './helpers.x.mesh.js';
+import Renderer3D from './helpers.x.renderer3d.js';
+import Renderer2D from './helpers.x.renderer2d.js';
+import Volume from './helpers.x.volume.js';
 
 export {
     Interactor as InteractorX,

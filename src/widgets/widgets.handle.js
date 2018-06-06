@@ -1,7 +1,7 @@
-import WidgetsBase from './widgets.base';
-import CoreIntersections from '../core/core.intersections';
+import WidgetsBase from './widgets.base.js';
+import CoreIntersections from '../core/core.intersections.js';
 
-import {Vector2, Vector3} from 'three';
+import {Vector2, Vector3} from 'three.js';
 
 /**
  * @module widgets/handle

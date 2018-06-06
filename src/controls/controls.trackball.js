@@ -6,7 +6,7 @@
  * @author Luca Antiga  / http://lantiga.github.io
  */
 
-import {EventDispatcher, Quaternion, Vector2, Vector3} from 'three';
+import {EventDispatcher, Quaternion, Vector2, Vector3} from 'three.js';
 
  export default class Trackball extends EventDispatcher {
   constructor(object, domElement) {

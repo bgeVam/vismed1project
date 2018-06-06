@@ -1,6 +1,6 @@
 /* globals Stats, dat*/
 
-import CamerasOrthographic from './src/cameras/cameras.orthographic';
+import CamerasOrthographic from './src/cameras/cameras.orthographic.js';
 import ControlsOrthographic from './src/controls/controls.trackballortho.js';
 import HelpersLut from './src/helpers/helpers.lut.js';
 import HelpersStack from './src/helpers/helpers.stack.js';

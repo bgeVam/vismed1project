@@ -1,4 +1,4 @@
-import CoreUtils from '../core/core.utils';
+import CoreUtils from '../core/core.utils.js';
 
 /**
  * Event Based progressbar

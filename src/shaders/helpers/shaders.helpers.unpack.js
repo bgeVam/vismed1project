@@ -1,4 +1,4 @@
-import ShadersBase from '../shaders.base';
+import ShadersBase from '../shaders.base.js';
 
 /**
  * Set of methods to unpack values from [r][b][g][a] -> float

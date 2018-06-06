@@ -1,7 +1,7 @@
-import WidgetsBase from './widgets.base';
-import WidgetsHandle from './widgets.handle';
+import WidgetsBase from './widgets.base.js';
+import WidgetsHandle from './widgets.handle.js';
 
-import {Vector3} from 'three';
+import {Vector3} from 'three.js';
 
 /**
  * @module widgets/angle

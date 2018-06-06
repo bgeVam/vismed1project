@@ -1,8 +1,8 @@
 /** * Imports ***/
-import {Vector3, Matrix4} from 'three';
-import CoreColors from '../core/core.colors';
-import CoreUtils from '../core/core.utils';
-import ModelsBase from '../models/models.base';
+import {Vector3, Matrix4} from 'three.js';
+import CoreColors from '../core/core.colors.js';
+import CoreUtils from '../core/core.utils.js';
+import ModelsBase from '../models/models.base.js';
 
 const binaryString = require('math-float32-to-binary-string');
 

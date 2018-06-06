@@ -1,5 +1,5 @@
-import InterpolationIdentity from './shaders.interpolation.identity';
-import InterpolationTrilinear from './shaders.interpolation.trilinear';
+import InterpolationIdentity from './shaders.interpolation.identity.js';
+import InterpolationTrilinear from './shaders.interpolation.trilinear.js';
 
 function shadersInterpolation(baseFragment, currentVoxel, dataValue, gradient) {
   switch (baseFragment._uniforms.uInterpolation.value) {

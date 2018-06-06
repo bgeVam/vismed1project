@@ -1,5 +1,5 @@
 /** * Imports ***/
-import ParsersVolume from './parsers.volume';
+import ParsersVolume from './parsers.volume.js';
 
 let DicomParser = require('dicom-parser');
 let Jpeg = require('jpeg-lossless-decoder-js');

@@ -1,7 +1,7 @@
-import CoreUtils from './core.utils';
-import Validators from './core.validators';
+import CoreUtils from './core.utils.js';
+import Validators from './core.validators.js';
 
-import {Matrix4, Vector3} from 'three';
+import {Matrix4, Vector3} from 'three.js';
 
 /**
  * Compute/test intersection between different objects.

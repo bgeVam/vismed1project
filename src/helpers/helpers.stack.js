@@ -1,9 +1,9 @@
 /** * Imports ***/
-import HelpersBorder from '../helpers/helpers.border';
-import HelpersBoundingBox from '../helpers/helpers.boundingbox';
-import HelpersSlice from '../helpers/helpers.slice';
+import HelpersBorder from '../helpers/helpers.border.js';
+import HelpersBoundingBox from '../helpers/helpers.boundingbox.js';
+import HelpersSlice from '../helpers/helpers.slice.js';
 
-import {Vector3} from 'three';
+import {Vector3} from 'three.js';
 
 /**
  * Helper to easily display and interact with a stack.<br>

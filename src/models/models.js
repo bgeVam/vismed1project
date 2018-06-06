@@ -1,7 +1,7 @@
-import Frame from './models.frame';
-import Stack from './models.stack';
-import Series from './models.series';
-import Voxel from './models.voxel';
+import Frame from './models.frame.js';
+import Stack from './models.stack.js';
+import Series from './models.series.js';
+import Voxel from './models.voxel.js';
 
 export {
     Frame as FrameModel,

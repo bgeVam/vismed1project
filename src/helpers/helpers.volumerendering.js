@@ -1,11 +1,11 @@
 /** * Imports ***/
-import ShadersUniform from '../shaders/shaders.vr.uniform';
-import ShadersVertex from '../shaders/shaders.vr.vertex';
-import ShadersFragment from '../shaders/shaders.vr.fragment';
+import ShadersUniform from '../shaders/shaders.vr.uniform.js';
+import ShadersVertex from '../shaders/shaders.vr.vertex.js';
+import ShadersFragment from '../shaders/shaders.vr.fragment.js';
 
-import HelpersMaterialMixin from '../helpers/helpers.material.mixin';
+import HelpersMaterialMixin from '../helpers/helpers.material.mixin.js';
 
-import {Matrix4} from 'three';
+import {Matrix4} from 'three.js';
 
 /**
  * @module helpers/volumerendering

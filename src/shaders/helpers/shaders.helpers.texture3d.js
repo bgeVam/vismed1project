@@ -1,4 +1,4 @@
-import ShadersBase from '../shaders.base';
+import ShadersBase from '../shaders.base.js';
 
 class Texture3d extends ShadersBase {
   constructor() {

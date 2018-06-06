@@ -1,7 +1,7 @@
 /**
  * @module helpers/x/renderer3d
  */
-import ControlsTrackball from '../../controls/controls.trackball';
+import ControlsTrackball from '../../controls/controls.trackball.js';
 
 export default class {
   constructor(containerId='r3d') {

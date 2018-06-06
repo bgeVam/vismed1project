@@ -1,7 +1,7 @@
 const URL = require('url');
-import Validators from './core.validators';
+import Validators from './core.validators.js';
 
-import {Matrix4, Vector3} from 'three';
+import {Matrix4, Vector3} from 'three.js';
 
 /**
  * General purpose functions.

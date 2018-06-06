@@ -2,7 +2,7 @@
  * @module presets/segmentation
  */
 
-import freesurferSegmentation from './presets.segmentation.freesurfer';
+import freesurferSegmentation from './presets.segmentation.freesurfer.js';
 
 
 export default class PresetsSegmentation {

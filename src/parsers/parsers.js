@@ -1,7 +1,7 @@
-import Dicom from './parsers.dicom';
-import Mgh from './parsers.mgh';
-import Nifti from './parsers.nifti';
-import Nrrd from './parsers.nrrd';
+import Dicom from './parsers.dicom.js';
+import Mgh from './parsers.mgh.js';
+import Nifti from './parsers.nifti.js';
+import Nrrd from './parsers.nrrd.js';
 
 export {
     Dicom as DicomParser,

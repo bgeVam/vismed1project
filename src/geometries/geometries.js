@@ -1,5 +1,5 @@
-import Slice from './geometries.slice';
-import Voxel from './geometries.voxel';
+import Slice from './geometries.slice.js';
+import Voxel from './geometries.voxel.js';
 
 export {
     Slice as SliceGeometry,

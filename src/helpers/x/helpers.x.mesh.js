@@ -1,4 +1,4 @@
-import {Matrix4} from 'three';
+import {Matrix4} from 'three.js';
 
 /**
  * @module helpers/x/mesh

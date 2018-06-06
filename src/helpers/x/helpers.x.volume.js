@@ -1,8 +1,8 @@
 /**
  * @module helpers/x/volume
  */
-import HelpersStack from '../helpers.stack';
-import LoadersVolume from '../../loaders/loaders.volume';
+import HelpersStack from '../helpers.stack.js';
+import LoadersVolume from '../../loaders/loaders.volume.js';
 
 export default class extends THREE.Object3D {
   constructor() {

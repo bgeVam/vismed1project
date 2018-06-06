@@ -5,7 +5,7 @@
  * @author Max Smolens / https://github.com/msmolens
  */
 
-import {EventDispatcher, Vector2, Vector3} from 'three';
+import {EventDispatcher, Vector2, Vector3} from 'three.js';
 
 export default class Trackballortho extends EventDispatcher {
   constructor(object, domElement, state = {NONE: -1, ROTATE: 1, ZOOM: 2, PAN: 0, SCROLL: 4, TOUCH_ROTATE: 4, TOUCH_ZOOM_PAN: 5}) {

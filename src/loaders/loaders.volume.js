@@ -1,16 +1,16 @@
 /** * Imports ***/
 const PAKO = require('pako');
 
-import LoadersBase from './loaders.base';
-import CoreUtils from '../core/core.utils';
-import ModelsSeries from '../models/models.series';
-import ModelsStack from '../models/models.stack';
-import ModelsFrame from '../models/models.frame';
-import ParsersDicom from '../parsers/parsers.dicom';
-import ParsersMhd from '../parsers/parsers.mhd';
-import ParsersNifti from '../parsers/parsers.nifti';
-import ParsersNrrd from '../parsers/parsers.nrrd';
-import ParsersMgh from '../parsers/parsers.mgh';
+import LoadersBase from './loaders.base.js';
+import CoreUtils from '../core/core.utils.js';
+import ModelsSeries from '../models/models.series.js';
+import ModelsStack from '../models/models.stack.js';
+import ModelsFrame from '../models/models.frame.js';
+import ParsersDicom from '../parsers/parsers.dicom.js';
+import ParsersMhd from '../parsers/parsers.mhd.js';
+import ParsersNifti from '../parsers/parsers.nifti.js';
+import ParsersNrrd from '../parsers/parsers.nrrd.js';
+import ParsersMgh from '../parsers/parsers.mgh.js';
 
 /**
  *

@@ -1,11 +1,11 @@
 
-import WidgetsBase from './widgets.base';
-import GeometriesVoxel from '../geometries/geometries.voxel';
-import ModelsStack from '../models/models.stack';
-import ModelsVoxel from '../models/models.voxel';
-import CoreIntersections from '../core/core.intersections';
+import WidgetsBase from './widgets.base.js';
+import GeometriesVoxel from '../geometries/geometries.voxel.js';
+import ModelsStack from '../models/models.stack.js';
+import ModelsVoxel from '../models/models.voxel.js';
+import CoreIntersections from '../core/core.intersections.js';
 
-import {Vector2, Vector3} from 'three';
+import {Vector2, Vector3} from 'three.js';
 
 /**
  * @module widgets/voxelProbe
