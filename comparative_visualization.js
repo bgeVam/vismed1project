@@ -1,5 +1,8 @@
 /* globals dat, AMI*/
 
+//Setup link
+var link = document.getElementById('ab');
+
 // Setup renderer left
 var containerLeft = document.getElementById('container_left');
 var rendererLeft = new THREE.WebGLRenderer({
@@ -59,6 +62,13 @@ window.addEventListener('resize', onWindowResize, false);
     });
     var customContainer = document.getElementById('my-gui-container');
     customContainer.appendChild(gui.domElement);
+    var switchVisualization = document.createElement('a');
+    var linkText = document.createTextNode("Switch Visualizations");
+    switchVisualization.appendChild(linkText);
+    switchVisualization.title = "Switch Visualizations";
+    switchVisualization.href = "test.html";
+    switchVisualization.setAttribute("class", "abc");
+    customContainer.appendChild(switchVisualization);
 
     var stackFolder = gui.addFolder('Slice');
     var index = stackFolder
@@ -138,6 +148,10 @@ window.addEventListener('resize', onWindowResize, false);
        stackHelperRight.border.visible = stackHelperLeft.border.visible;
     });
     borderFolder.open();
+
+    // image settings
+    //var settingsFolder = gui.addFolder('<a href="test.html">link text</a>');
+    //settingsFolder.open();
 }
 
 /**

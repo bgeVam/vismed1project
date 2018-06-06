@@ -38,3 +38,12 @@ body{
   z-index:2;
   background-color: #212121
 }
+
+/* URL */
+.abc {
+  width: 22%;
+  right: 0;
+  z-index:2;
+   padding-top: 20px;
+   position: fixed;
+}
