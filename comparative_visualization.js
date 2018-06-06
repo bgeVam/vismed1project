@@ -65,6 +65,10 @@ window.addEventListener('resize', onWindowResize, false);
         .add(stackHelperLeft, 'index', 0, stackLeft.dimensionsIJK.z - 1)
         .step(1)
         .listen();
+    index.onChange(function(value) {
+       //update Right index
+       stackHelperRight.index = stackHelperLeft.index;
+    });
 
     var orientation = stackFolder
         .add(stackHelperLeft, 'orientation', 0, 2)
@@ -72,8 +76,10 @@ window.addEventListener('resize', onWindowResize, false);
         .listen();
     orientation.onChange(function(value) {
         index.__max = stackHelperLeft.orientationMaxIndex;
-        // center index
         stackHelperLeft.index = Math.floor(index.__max / 2);
+        //update Right orientation and index
+        stackHelperRight.orientation = stackHelperLeft.orientation;
+        stackHelperRight.index = stackHelperLeft.index;
     });
     stackFolder.open();
 
@@ -126,7 +132,7 @@ animate();
 var loaderLeft = new AMI.VolumeLoader(containerLeft);
 var loaderRight = new AMI.VolumeLoader(containerRight);
 
-var filesLeft = 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti_normal/PD_9mm_pn0_rf0.nii';
+var filesLeft = 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti_normal/T2_9mm_pn0_rf0.nii';
 var filesRight = 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti_lesion/T2_9mm_pn0_rf0.nii';
 
 loaderLeft
