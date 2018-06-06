@@ -1,17 +1,17 @@
 /* globals Stats, dat*/
 
-import CamerasOrthographic from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/cameras/cameras.orthographic.js';
-import ControlsOrthographic from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/controls/controls.trackballortho.js';
-import HelpersLut from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/helpers/helpers.lut.js';
-import HelpersStack from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/helpers/helpers.stack.js';
-import LoadersVolume from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/loaders/loaders.volume.js';
+import CamerasOrthographic from './src/cameras/cameras.orthographic';
+import ControlsOrthographic from './src/controls/controls.trackballortho.js';
+import HelpersLut from './src/helpers/helpers.lut.js';
+import HelpersStack from './src/helpers/helpers.stack.js';
+import LoadersVolume from './src/loaders/loaders.volume.js';
 
-import ShadersLayerUniform from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/shaders/shaders.layer.uniform.js';
-import ShadersLayerVertex from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/shaders/shaders.layer.vertex.js';
-import ShadersLayerFragment from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/shaders/shaders.layer.fragment.js';
-import ShadersUniform from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/shaders/shaders.data.uniform.js';
-import ShadersVertex from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/shaders/shaders.data.vertex.js';
-import ShadersFragment from 'https://raw.githubusercontent.com/bgeVam/vismed1project/master/src/shaders/shaders.data.fragment.js';
+import ShadersLayerUniform from './src/shaders/shaders.layer.uniform.js';
+import ShadersLayerVertex from './src/shaders/shaders.layer.vertex.js';
+import ShadersLayerFragment from './src/shaders/shaders.layer.fragment.js';
+import ShadersUniform from './src/shaders/shaders.data.uniform.js';
+import ShadersVertex from './src/shaders/shaders.data.vertex.js';
+import ShadersFragment from './src/shaders/shaders.data.fragment.js';
 
 // standard global letiables
 let controls;
