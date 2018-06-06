@@ -83,18 +83,40 @@ window.addEventListener('resize', onWindowResize, false);
     });
     stackFolder.open();
 
+
     // slice
     var sliceFolder = gui.addFolder('Image');
-    sliceFolder
+    var colorDepth = sliceFolder
         .add(stackHelperLeft.slice, 'windowWidth', 1, stackLeft.minMax[1] - stackLeft.minMax[0])
         .step(1)
         .listen();
-    sliceFolder
+    colorDepth.onChange(function(value) {
+       //update Right colorDepth
+       stackHelperRight.slice.windowWidth = stackHelperLeft.slice.windowWidth;
+    });
+    var brightness = sliceFolder
         .add(stackHelperLeft.slice, 'windowCenter', stackLeft.minMax[0], stackLeft.minMax[1])
         .step(1)
         .listen();
-    sliceFolder.add(stackHelperLeft.slice, 'intensityAuto').listen();
-    sliceFolder.add(stackHelperLeft.slice, 'invert');
+    brightness.onChange(function(value) {
+       //update Right brightness
+       stackHelperRight.slice.windowCenter = stackHelperLeft.slice.windowCenter;
+    });
+    var intensityAuto = sliceFolder
+        .add(stackHelperLeft.slice, 'intensityAuto')
+        .listen();
+    intensityAuto.onChange(function(value) {
+       //update Right intensityAuto
+       stackHelperRight.slice.intensityAuto = stackHelperLeft.slice.intensityAuto;
+    });
+    var invert = sliceFolder
+        .add(stackHelperLeft.slice, 'invert')
+        .listen();
+    invert.onChange(function(value) {
+       //update Right invert
+       stackHelperRight.slice.invert = stackHelperLeft.slice.invert;
+    });
+
     sliceFolder.open();
 
     // bbox
