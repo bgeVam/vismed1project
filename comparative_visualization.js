@@ -121,18 +121,23 @@ window.addEventListener('resize', onWindowResize, false);
 
     // bbox
     var bboxFolder = gui.addFolder('Bounding Box');
-    bboxFolder.add(stackHelperLeft.bbox, 'visible');
+    var boundingVisible = bboxFolder
+        .add(stackHelperLeft.bbox, 'visible');
+    boundingVisible.onChange(function(value) {
+       //update Right invert
+       stackHelperRight.bbox.visible = stackHelperLeft.bbox.visible;
+    });
     bboxFolder.open();
 
     // border
     var borderFolder = gui.addFolder('Border');
-    borderFolder.add(stackHelperLeft.border, 'visible');
-
+    var borderVisible = borderFolder
+        .add(stackHelperLeft.border, 'visible');
+    borderVisible.onChange(function(value) {
+       //update Right invert
+       stackHelperRight.border.visible = stackHelperLeft.border.visible;
+    });
     borderFolder.open();
-
-    // image settings
-    var settingsFolder = gui.addFolder('Settings');
-    settingsFolder.open();
 }
 
 /**
