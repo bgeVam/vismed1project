@@ -21,7 +21,8 @@ rendererRight.setPixelRatio(window.devicePixelRatio);
 containerRight.appendChild(rendererRight.domElement);
 
 // Setup scene
-var scene = new THREE.Scene();
+var sceneLeft = new THREE.Scene();
+var sceneRight = new THREE.Scene();
 
 // Setup camera
 var camera = new THREE.PerspectiveCamera(45, containerLeft.offsetWidth / containerLeft.offsetHeight, 0.01, 10000000);
@@ -48,56 +49,57 @@ window.addEventListener('resize', onWindowResize, false);
 /**
  * Build GUI
  */
-function gui(stackHelper) {
-    var stack = stackHelper.stack;
+ function gui(stackHelperLeft, stackHelperRight) {
+
+    var stackLeft = stackHelperLeft.stack;
+    var stackRight = stackHelperRight.stack;
+
     var gui = new dat.GUI({
         autoPlace: false,
     });
     var customContainer = document.getElementById('my-gui-container');
     customContainer.appendChild(gui.domElement);
 
-    // stack
     var stackFolder = gui.addFolder('Slice');
-    // index range depends on stackHelper orientation.
     var index = stackFolder
-        .add(stackHelper, 'index', 0, stack.dimensionsIJK.z - 1)
+        .add(stackHelperLeft, 'index', 0, stackLeft.dimensionsIJK.z - 1)
         .step(1)
         .listen();
+
     var orientation = stackFolder
-        .add(stackHelper, 'orientation', 0, 2)
+        .add(stackHelperLeft, 'orientation', 0, 2)
         .step(1)
         .listen();
     orientation.onChange(function(value) {
-        index.__max = stackHelper.orientationMaxIndex;
+        index.__max = stackHelperLeft.orientationMaxIndex;
         // center index
-        stackHelper.index = Math.floor(index.__max / 2);
+        stackHelperLeft.index = Math.floor(index.__max / 2);
     });
     stackFolder.open();
 
     // slice
     var sliceFolder = gui.addFolder('Image');
     sliceFolder
-        .add(stackHelper.slice, 'windowWidth', 1, stack.minMax[1] - stack.minMax[0])
+        .add(stackHelperLeft.slice, 'windowWidth', 1, stackLeft.minMax[1] - stackLeft.minMax[0])
         .step(1)
         .listen();
     sliceFolder
-        .add(stackHelper.slice, 'windowCenter', stack.minMax[0], stack.minMax[1])
+        .add(stackHelperLeft.slice, 'windowCenter', stackLeft.minMax[0], stackLeft.minMax[1])
         .step(1)
         .listen();
-    sliceFolder.add(stackHelper.slice, 'intensityAuto').listen();
-    sliceFolder.add(stackHelper.slice, 'invert');
+    sliceFolder.add(stackHelperLeft.slice, 'intensityAuto').listen();
+    sliceFolder.add(stackHelperLeft.slice, 'invert');
     sliceFolder.open();
 
     // bbox
     var bboxFolder = gui.addFolder('Bounding Box');
-    bboxFolder.add(stackHelper.bbox, 'visible');
-    //bboxFolder.addColor(stackHelper.bbox, 'color');
+    bboxFolder.add(stackHelperLeft.bbox, 'visible');
     bboxFolder.open();
 
     // border
     var borderFolder = gui.addFolder('Border');
-    borderFolder.add(stackHelper.border, 'visible');
-    //borderFolder.addColor(stackHelper.border, 'color');
+    borderFolder.add(stackHelperLeft.border, 'visible');
+
     borderFolder.open();
 
     // image settings
@@ -111,8 +113,8 @@ function gui(stackHelper) {
 function animate() {
     controlsLeft.update();
     controlsRight.update();
-    rendererLeft.render(scene, camera);
-    rendererRight.render(scene, camera);
+    rendererLeft.render(sceneLeft, camera);
+    rendererRight.render(sceneRight, camera);
     // request new frame
     requestAnimationFrame(function() {
         animate();
@@ -123,53 +125,64 @@ animate();
 // Setup loader
 var loaderLeft = new AMI.VolumeLoader(containerLeft);
 var loaderRight = new AMI.VolumeLoader(containerRight);
-var t2 = [
-'',
-];
 
-var files = t2.map(function(v) {
-    return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti_normal/PD_1mm_pn0_rf0.nii';
-});
+var filesLeft = 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti_normal/PD_9mm_pn0_rf0.nii';
+var filesRight = 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti_lesion/T2_9mm_pn0_rf0.nii';
 
 loaderLeft
-    .load(files)
+.load(filesLeft)
+.then(function() {
+    window.console.log('Done Loading Left');
+    loaderRight
+    .load(filesRight)
     .then(function() {
+        window.console.log('Done Loading Right');
+        
         // merge files into clean series/stack/frame structure
-        var series = loaderLeft.data[0].mergeSeries(loaderLeft.data);
-        var stack = series[0].stack[0];
+        var seriesLeft = loaderLeft.data[0].mergeSeries(loaderLeft.data);
+        var stackLeft = seriesLeft[0].stack[0];
         loaderLeft.free();
         loaderLeft = null;
+
+        // merge files into clean series/stack/frame structure
+        var seriesRight = loaderRight.data[0].mergeSeries(loaderRight.data);
+        var stackRight = seriesRight[0].stack[0];
+        loaderRight.free();
+        loaderRight = null;
+
         // be carefull that series and target stack exist!
-        var stackHelper = new AMI.StackHelper(stack);
-        stackHelper.bbox.color = 0x8bc34a;
-        stackHelper.border.color = 0xf44336;
+        var stackHelperLeft = new AMI.StackHelper(stackLeft);
+        stackHelperLeft.bbox.color = 0x8bc34a;
+        stackHelperLeft.border.color = 0xf44336;
+        sceneLeft.add(stackHelperLeft);
 
-        scene.add(stackHelper);
+        // be carefull that series and target stack exist!
+        var stackHelperRight = new AMI.StackHelper(stackRight);
+        stackHelperRight.bbox.color = 0x8bc34a;
+        stackHelperRight.border.color = 0xf44336;
+        sceneRight.add(stackHelperRight);
 
+        if (stackLeft._dimensionsIJK.z != stackRight._dimensionsIJK.z)
+        {
+         throw new Error("Image size does not match");
+        }
         // build the gui
-        gui(stackHelper);
+        gui(stackHelperLeft, stackHelperRight);
 
         // center camera and interactor to center of bouding box
-        var centerLPS = stackHelper.stack.worldCenter();
+        var centerLPS = stackHelperLeft.stack.worldCenter();
         camera.lookAt(centerLPS.x, centerLPS.y, centerLPS.z);
         camera.updateProjectionMatrix();
         controlsLeft.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
     })
     .catch(function(error) {
-        window.console.log('oops... something went wrong...');
+        window.console.log('Failed to load right');
         window.console.log(error);
     });
+})
+.catch(function(error) {
+    window.console.log('Failed to load left');
+    window.console.log(error);
+});
 
-loaderRight
-    .load(files)
-    .then(function() {
-        // merge files into clean series/stack/frame structure
-        var series = loaderRight.data[0].mergeSeries(loaderRight.data);
-        var stack = series[0].stack[0];
-        loaderRight.free();
-        loaderRight = null;
-    })
-    .catch(function(error) {
-        window.console.log('oops... something went wrong...');
-        window.console.log(error);
-    });
+
