@@ -4,28 +4,29 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<title>Comparative Brain Visualization</title>
+	<title>AMI - Example viewers_compare</title>
 
-	<link rel="stylesheet" type="text/css" href="comparative_visualization.css">
+	<link rel="stylesheet" type="text/css" href="viewers_compare.css">
 
 	<script type="text/javascript" src="https://use.edgefonts.net/source-code-pro.js"></script>
 	<script type="text/javascript" src="https://cdn.rawgit.com/dataarts/dat.gui/master/build/dat.gui.min.js"></script>
 	<script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/stats.js/master/build/stats.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/87/three.min.js"></script>
-
-	<!-- AMI -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ami.js/0.0.22/ami.min.js"></script>##
+	<script type="text/javascript" src="three.min.js"></script>
 </head>
 
 <body>
+	<div id="my-gui-container"></div>
 
-	<div id="my-gui-container" ></div>
+<div id="my-lut-container">
+  <div>Layer 0<div id="my-lut-canvases-l0" class="my-lut-canvases"></div></div>
+  <div>Layer 1<div id="my-lut-canvases-l1" class="my-lut-canvases"></div></div>
+</div>
 
-	<div id="container_left" class="split left"></div>
+<div id="r3d"></div>
 
-	<div id="container_right" class="split right"></div>
+<div style="background-color: #f9f9f9; width: 0; height: 0;"></div>
 
-	<script type="text/javascript" src="comparative_visualization.js"></script>
+	<script type="module" src="viewers_compare01.js"></script>
 	
 </body>
 
