@@ -66,7 +66,7 @@ window.addEventListener('resize', onWindowResize, false);
     var linkText = document.createTextNode("Switch Visualizations");
     switchVisualization.appendChild(linkText);
     switchVisualization.title = "Switch Visualizations";
-    switchVisualization.href = "test.html";
+    switchVisualization.href = "viewers_compare.html";
     switchVisualization.setAttribute("class", "abc");
     customContainer.appendChild(switchVisualization);
 
