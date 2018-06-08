@@ -136,14 +136,14 @@ window.onload = function() {
   // init threeJS...
   init();
 
-  let data = [
-    'patient1/7001_t1_average_BRAINSABC.nii.gz',
-    'patient2/7002_t1_average_BRAINSABC.nii.gz',
+  let images = [
+    'nifti_normal/T2_9mm_pn0_rf0.nii',//left  = normal
+    'nifti_lesion/T2_9mm_pn0_rf0.nii' //right = lesion
   ];
-
-  let files = data.map(function(v) {
-    return 'https://cdn.rawgit.com/FNNDSC/data/master/nifti/slicer_brain/' + v;
+  let files = images.map(function(v) {
+    return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
   });
+
 
   function buildGUI(stackHelper) {
     function updateLayer1() {
@@ -309,7 +309,7 @@ window.onload = function() {
     let stack = null;
     let stack2 = null;
 
-    if (mergedSeries[0].seriesInstanceUID !== 'https://cdn.rawgit.com/FNNDSC/data/master/nifti/slicer_brain/patient1/7001_t1_average_BRAINSABC.nii.gz') {
+    if (mergedSeries[0].seriesInstanceUID !== 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti_normal/T2_9mm_pn0_rf0.nii') {
       stack = mergedSeries[1].stack[0];
       stack2 = mergedSeries[0].stack[0];
     } else {
