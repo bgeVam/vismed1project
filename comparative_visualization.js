@@ -76,7 +76,13 @@ window.addEventListener('resize', onWindowResize, false);
     // image settings
     var settingsFolder = gui.addFolder('Settings');
     var mod = settingsFolder
-        .add(settingsVar, 'modality', ['T1','T2','PD'])    
+        .add(settingsVar, 'modality', ['T1','T2','PD'])      
+    var thickness = settingsFolder
+        .add(settingsVar, 'slicethickness', 1 , 9).step(1) // funktioniert noch nicht so wie es sollte!      
+    var noise = settingsFolder
+        .add(settingsVar, 'noise',0 , 9).step(1) // funktioniert noch nicht so wie es sollte!     
+    var rf = settingsFolder
+        .add(settingsVar, 'rf', { '0%': 0, '20%': 20, '40%': 40 })      
     settingsFolder.open();
   
     // slice
