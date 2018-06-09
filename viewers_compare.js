@@ -211,9 +211,11 @@ window.onload = function() {
         visualization: 'overlay'
     }
 
+    //
     // switch visualization
-    var visualizationFolder = gui.addFolder('Visualization');
-    var switchVis = visualizationFolder
+    //
+    let visualizationFolder = gui.addFolder('Visualization');
+    let switchVis = visualizationFolder
         .add(params, 'visualization', ['juxtaposition', 'overlay']);
     switchVis.onChange(function(value){
         if (value=='juxtaposition') {
@@ -221,6 +223,20 @@ window.onload = function() {
         }
     })
     visualizationFolder.open();
+
+    //
+    // image settings
+    //
+    let settingsFolder = gui.addFolder('Settings');
+    let mod = settingsFolder
+        .add(settingsVar, 'modality', ['T1','T2','PD'])      
+    let thickness = settingsFolder
+        .add(settingsVar, 'slicethickness', 1 , 9).step(1) // funktioniert noch nicht so wie es sollte!      
+    let noise = settingsFolder
+        .add(settingsVar, 'noise',0 , 9).step(1) // funktioniert noch nicht so wie es sollte!     
+    let rf = settingsFolder
+        .add(settingsVar, 'rf', { '0%': 0, '20%': 20, '40%': 40 })   
+    settingsFolder.open();
 
     //
     // layer 0 folder
