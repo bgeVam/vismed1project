@@ -136,14 +136,38 @@ window.onload = function() {
   // init threeJS...
   init();
 
-  let images = [
-    'nifti_normal/T2_9mm_pn0_rf0.nii',//left  = normal
-    'nifti_lesion/T2_9mm_pn0_rf0.nii' //right = lesion
-  ];
-  let files = images.map(function(v) {
-    return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
-  });
+  // let images = [
+  //   'nifti_normal/T2_9mm_pn0_rf0.nii',//left  = normal
+  //   'nifti_lesion/T2_9mm_pn0_rf0.nii' //right = lesion
+  // ];
+  // let files = images.map(function(v) {
+  //   return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
+  // });
+  // file path depending on image settings
 
+  function fileName(state,mod,thickness,noise,rf) {
+    return 'nifti_'+state+'/'+mod+'_'+thickness+'mm_pn'+noise+'_rf'+rf+'.nii';
+  }
+
+  function filesName(settingsVar) {
+    var images = [
+        fileName('normal',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf),
+        fileName('lesion',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf)
+    ];
+    var files = images.map(function(v) {
+        return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
+    });
+    return files;
+  }
+
+  // variable for settings
+  var settingsVar = {
+    modality: 'T2',
+    slicethickness: 9,
+    noise: 0,
+    rf: 0,
+  }
+  files = filesName(settingsVar);
 
   function buildGUI(stackHelper) {
     function updateLayer1() {
