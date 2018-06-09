@@ -56,7 +56,11 @@ window.addEventListener('resize', onWindowResize, false);
 
     var stackLeft = stackHelperLeft.stack;
     var stackRight = stackHelperRight.stack;   
-    var settings = settingsVar; 
+    var settings = settingsVar;
+    var params = {
+        refresh: false,
+        visualization: 'juxtaposition'
+    } 
 
     var gui = new dat.GUI({
         autoPlace: false,
@@ -65,13 +69,22 @@ window.addEventListener('resize', onWindowResize, false);
     customContainer.appendChild(gui.domElement);
 
     // switch visualization
-    var switchVisualization = document.createElement('a');
-    var linkText = document.createTextNode("Switch Visualizations");
-    switchVisualization.appendChild(linkText);
-    switchVisualization.title = "Switch Visualizations";
-    switchVisualization.href = "viewers_compare.html";
-    switchVisualization.setAttribute("class", "abc");
-    customContainer.appendChild(switchVisualization);
+    var visualizationFolder = gui.addFolder('Visualization');
+    var switchVis = visualizationFolder
+        .add(params, 'visualization', ['juxtaposition', 'overlay']);
+    switchVis.onChange(function(value){
+        if (value=='overlay') {
+        window.location.href = "viewers_compare.html";
+        }
+    })
+    visualizationFolder.open();
+    // var switchVisualization = document.createElement('a');
+    // var linkText = document.createTextNode("Switch Visualizations");
+    // switchVisualization.appendChild(linkText);
+    // switchVisualization.title = "Switch Visualizations";
+    // switchVisualization.href = "viewers_compare.html";
+    // switchVisualization.setAttribute("class", "abc");
+    // customContainer.appendChild(switchVisualization);
 
     // image settings
     var settingsFolder = gui.addFolder('Settings');
@@ -82,7 +95,7 @@ window.addEventListener('resize', onWindowResize, false);
     var noise = settingsFolder
         .add(settingsVar, 'noise',0 , 9).step(1) // funktioniert noch nicht so wie es sollte!     
     var rf = settingsFolder
-        .add(settingsVar, 'rf', { '0%': 0, '20%': 20, '40%': 40 })      
+        .add(settingsVar, 'rf', { '0%': 0, '20%': 20, '40%': 40 })   
     settingsFolder.open();
   
     // slice
@@ -141,8 +154,7 @@ window.addEventListener('resize', onWindowResize, false);
        //update Right invert
        stackHelperRight.slice.invert = stackHelperLeft.slice.invert;
     });
-
-    sliceFolder.open();
+    sliceFolder.close();
 
     // bbox
     var bboxFolder = gui.addFolder('Bounding Box');
@@ -152,7 +164,7 @@ window.addEventListener('resize', onWindowResize, false);
        //update Right invert
        stackHelperRight.bbox.visible = stackHelperLeft.bbox.visible;
     });
-    bboxFolder.open();
+    bboxFolder.close();
 
     // border
     var borderFolder = gui.addFolder('Border');
@@ -162,7 +174,7 @@ window.addEventListener('resize', onWindowResize, false);
        //update Right invert
        stackHelperRight.border.visible = stackHelperLeft.border.visible;
     });
-    borderFolder.open();
+    borderFolder.close();
 }
 
 /**
