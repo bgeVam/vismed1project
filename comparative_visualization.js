@@ -127,7 +127,7 @@ function gui(stackHelperLeft, stackHelperRight, settingsVar) {
             settingsVar.noise = settingsVar.noise - 1;
         }
         if (mod.isModified() || thickness.isModified() || noise.isModified || rf.isModified) {
-            // reload images with current settingsVar - noch nicht ganz richtig, da altes ebenfalls noch dargestellt wird
+            // reload images with current settingsVar
             sceneRight.remove(stackHelperRight);
             sceneLeft.remove(stackHelperLeft);
             customContainer.removeChild(gui.domElement);

@@ -161,7 +161,7 @@ window.onload = function() {
   }
 
   // variable for settings
-  var settingsVar = {
+  let settingsVar = {
     modality: 'T2',
     slicethickness: 9,
     noise: 0,
@@ -169,7 +169,10 @@ window.onload = function() {
   }
   files = filesName(settingsVar);
 
-  function buildGUI(stackHelper) {
+  /**
+   * Build GUI
+   */
+  function buildGUI(stackHelper, settingsVar) {
     function updateLayer1() {
       // update layer1 geometry...
       if (meshLayer1) {
@@ -236,6 +239,24 @@ window.onload = function() {
         .add(settingsVar, 'noise',0 , 9).step(1) // funktioniert noch nicht so wie es sollte!     
     let rf = settingsFolder
         .add(settingsVar, 'rf', { '0%': 0, '20%': 20, '40%': 40 })   
+    let refresh = settingsFolder
+        .add(params, 'refresh');
+    refresh.onChange(function (value) {
+      if (settingsVar.slicethickness % 2 == 0) { // even slice thickness does not exist -> 
+          settingsVar.slicethickness = settingsVar.slicethickness - 1;
+      }
+      if ((settingsVar.noise % 2 == 0) && (settingsVar.noise != 0)) {
+          settingsVar.noise = settingsVar.noise - 1;
+      }
+      if (mod.isModified() || thickness.isModified() || noise.isModified || rf.isModified) {
+          // reload images with current settingsVar
+          sceneLayer0.remove(stackHelper);
+          sceneLayer1.remove(meshLayer1);
+          sceneLayerMix.remove(meshLayerMix);
+          customContainer.removeChild(gui.domElement);
+          loadImages(filesName(settingsVar));
+      }
+    })    
     settingsFolder.open();
 
     //
@@ -353,7 +374,29 @@ window.onload = function() {
     window.addEventListener('mousemove', onMouseMove, false);
   }
 
-  let loader = new AMI.VolumeLoader(threeD);
+  /**
+   * Loader 
+   */
+  function loadImages(files){
+    loader = new AMI.VolumeLoader(threeD);
+    // load sequence for each file
+    loader.load(files)
+    .then(function() {
+      handleSeries();
+      // force 1st render
+      render();
+      // notify puppeteer to take screenshot
+      const puppetDiv = document.createElement('div');
+      puppetDiv.setAttribute('id', 'puppeteer');
+      document.body.appendChild(puppetDiv);
+    })
+    .catch(function(error) {
+      window.console.log('oops... something went wrong...');
+      window.console.log(error);
+    });
+  }
+
+  // handles series in loader
   function handleSeries() {
     //
     // first stack of first series
@@ -511,8 +554,19 @@ window.onload = function() {
     camera.fitBox(2);
 
     // CREATE LUT
+    domTarget0 = document.getElementById('my-lut-canvases-l0');    
+    domTarget1 = document.getElementById('my-lut-canvases-l1');
+    if (domTarget0.children.length > 0){
+      domTarget0.removeChild(domTarget0.children[1]);
+      domTarget0.removeChild(domTarget0.children[0]);
+    }
+    if (domTarget1.children.length > 0){
+      domTarget1.removeChild(domTarget1.children[1]);
+      domTarget1.removeChild(domTarget1.children[0]);
+    }
+
     lutLayer0 = new AMI.LutHelper(
-      'my-lut-canvases-l0',
+      domTarget0,
       'default',
       'linear',
       [[0, 0, 0, 0], [1, 1, 1, 1]],
@@ -520,7 +574,7 @@ window.onload = function() {
     lutLayer0.luts = AMI.LutHelper.presetLuts();
 
     lutLayer1 = new AMI.LutHelper(
-      'my-lut-canvases-l1',
+      domTarget1,
       'default',
       'linear',
       [[0, 0, 0, 0], [1, 1, 1, 1]],
@@ -528,22 +582,8 @@ window.onload = function() {
     lutLayer1.luts = AMI.LutHelper.presetLuts();
     layer1.lut = lutLayer1;
 
-    buildGUI(stackHelper);
+    buildGUI(stackHelper,settingsVar);
   }
 
-  // load sequence for each file
-  loader.load(files)
-  .then(function() {
-    handleSeries();
-    // force 1st render
-    render();
-    // notify puppeteer to take screenshot
-    const puppetDiv = document.createElement('div');
-    puppetDiv.setAttribute('id', 'puppeteer');
-    document.body.appendChild(puppetDiv);
-  })
-  .catch(function(error) {
-    window.console.log('oops... something went wrong...');
-    window.console.log(error);
-  });
+  loadImages(files);
 };
