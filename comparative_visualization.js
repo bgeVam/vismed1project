@@ -52,10 +52,11 @@ window.addEventListener('resize', onWindowResize, false);
 /**
  * Build GUI
  */
- function gui(stackHelperLeft, stackHelperRight) {
+ function gui(stackHelperLeft, stackHelperRight, settingsVar) {
 
     var stackLeft = stackHelperLeft.stack;
-    var stackRight = stackHelperRight.stack;  
+    var stackRight = stackHelperRight.stack;   
+    var settings = settingsVar; 
 
     var gui = new dat.GUI({
         autoPlace: false,
@@ -71,6 +72,12 @@ window.addEventListener('resize', onWindowResize, false);
     switchVisualization.href = "viewers_compare.html";
     switchVisualization.setAttribute("class", "abc");
     customContainer.appendChild(switchVisualization);
+
+    // image settings
+    var settingsFolder = gui.addFolder('Settings');
+    var mod = settingsFolder
+        .add(settingsVar, 'modality', ['T1','T2','PD'])    
+    settingsFolder.open();
   
     // slice
     var stackFolder = gui.addFolder('Slice');
@@ -211,47 +218,52 @@ files = filesName(settingsVar);
 /*
 Setup loader
 */
-var loader = new AMI.VolumeLoader(containerLeft);
+function loadImages(files){
 
-loader
-    .load(files)
-    .then(function() {
+    var loader = new AMI.VolumeLoader(containerLeft);
 
-        var series = loader.data[0].mergeSeries(loader.data);
-        console.log("LEFT IS" + series[0]._seriesInstanceUID);
-        console.log("RIGHT IS" + series[1]._seriesInstanceUID);
-        var stackLeft = series[0].stack[0];
-        var stackRight = series[1].stack[0];
-        loader.free();
-        loader = null;
+    loader
+        .load(files)
+        .then(function() {
 
-        // be carefull that series and target stack exist!
-        var stackHelperLeft = new AMI.StackHelper(stackLeft);
-        stackHelperLeft.bbox.color = 0x8bc34a;
-        stackHelperLeft.border.color = 0xf44336;
-        sceneLeft.add(stackHelperLeft);
+            var series = loader.data[0].mergeSeries(loader.data);
+            console.log("LEFT IS" + series[0]._seriesInstanceUID);
+            console.log("RIGHT IS" + series[1]._seriesInstanceUID);
+            var stackLeft = series[0].stack[0];
+            var stackRight = series[1].stack[0];
+            loader.free();
+            loader = null;
 
-        // be carefull that series and target stack exist!
-        var stackHelperRight = new AMI.StackHelper(stackRight);
-        stackHelperRight.bbox.color = 0x8bc34a;
-        stackHelperRight.border.color = 0xf44336;
-        sceneRight.add(stackHelperRight);
+            // be carefull that series and target stack exist!
+            var stackHelperLeft = new AMI.StackHelper(stackLeft);
+            stackHelperLeft.bbox.color = 0x8bc34a;
+            stackHelperLeft.border.color = 0xf44336;
+            sceneLeft.add(stackHelperLeft);
 
-        if (stackLeft._dimensionsIJK.z != stackRight._dimensionsIJK.z)
-        {
-            throw new Error("Image size does not match");
-        }
+            // be carefull that series and target stack exist!
+            var stackHelperRight = new AMI.StackHelper(stackRight);
+            stackHelperRight.bbox.color = 0x8bc34a;
+            stackHelperRight.border.color = 0xf44336;
+            sceneRight.add(stackHelperRight);
 
-        // build the gui
-        gui(stackHelperLeft, stackHelperRight);
+            if (stackLeft._dimensionsIJK.z != stackRight._dimensionsIJK.z)
+            {
+                throw new Error("Image size does not match");
+            }
 
-        // center camera and interactor to center of bouding box
-        var centerLPS = stackHelperLeft.stack.worldCenter();
-        camera.lookAt(centerLPS.x, centerLPS.y, centerLPS.z);
-        camera.updateProjectionMatrix();
-        controlsLeft.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
-    })
-    .catch(function(error) {
-        window.console.log('Failed to load images');
-        window.console.log(error);
-    });
+            // build the gui
+            gui(stackHelperLeft, stackHelperRight, settingsVar);
+
+            // center camera and interactor to center of bouding box
+            var centerLPS = stackHelperLeft.stack.worldCenter();
+            camera.lookAt(centerLPS.x, centerLPS.y, centerLPS.z);
+            camera.updateProjectionMatrix();
+            controlsLeft.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
+        })
+        .catch(function(error) {
+            window.console.log('Failed to load images');
+            window.console.log(error);
+        });
+}
+
+loadImages(files)
