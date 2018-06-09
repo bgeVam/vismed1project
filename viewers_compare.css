@@ -23,9 +23,11 @@
 
 #my-gui-container {
   position: fixed;
-  top: 30px;
-  right: 20px;
-  z-index:1;
+  width: 22%;
+  right: 0;
+  top: 0;
+  z-index:2;  
+  background-color: #212121
 }
 
 #my-lut-container {
@@ -61,3 +63,4 @@
   position: absolute;
   top: 0;
   left: 0;
+}

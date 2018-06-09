@@ -182,6 +182,21 @@ window.onload = function() {
 
     let customContainer = document.getElementById('my-gui-container');
     customContainer.appendChild(gui.domElement);
+    let params = {
+        refresh: false,
+        visualization: 'overlay'
+    }
+
+    // switch visualization
+    var visualizationFolder = gui.addFolder('Visualization');
+    var switchVis = visualizationFolder
+        .add(params, 'visualization', ['juxtaposition', 'overlay']);
+    switchVis.onChange(function(value){
+        if (value=='juxtaposition') {
+        window.location.href = "index.html";
+        }
+    })
+    visualizationFolder.open();
 
     //
     // layer 0 folder
