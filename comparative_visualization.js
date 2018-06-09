@@ -55,7 +55,7 @@ window.addEventListener('resize', onWindowResize, false);
  function gui(stackHelperLeft, stackHelperRight) {
 
     var stackLeft = stackHelperLeft.stack;
-    var stackRight = stackHelperRight.stack;   
+    var stackRight = stackHelperRight.stack;  
 
     var gui = new dat.GUI({
         autoPlace: false,
@@ -167,11 +167,23 @@ function animate() {
 }
 animate();
 
-// Setup loader
-var loader = new AMI.VolumeLoader(containerLeft);
+/*
+Create (default) files with variable settings
+*/
 
 function fileName(state,mod,thickness,noise,rf) {
     return 'nifti_'+state+'/'+mod+'_'+thickness+'mm_pn'+noise+'_rf'+rf+'.nii';
+}
+
+function filesName(settingsVar) {
+    var images = [
+        fileName('normal',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf),
+        fileName('lesion',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf)
+    ];
+    var files = images.map(function(v) {
+        return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
+    });
+    return files;
 }
 
 // variable for settings
@@ -181,19 +193,25 @@ var settingsVar = {
     noise: 0,
     rf: 0,
 }
+files = filesName(settingsVar);
 
-var images = [
-    fileName('normal',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf),
-    fileName('lesion',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf)
-];
+// var images = [
+//     fileName('normal',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf),
+//     fileName('lesion',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf)
+// ];
 
 // var images = [
 //     'nifti_normal/T2_9mm_pn0_rf0.nii',//left  = normal
 //     'nifti_lesion/T2_9mm_pn0_rf0.nii' //right = lesion
-// ];
-var files = images.map(function(v) {
-    return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
-});
+// // ];
+// var files = images.map(function(v) {
+//     return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
+// });
+
+/*
+Setup loader
+*/
+var loader = new AMI.VolumeLoader(containerLeft);
 
 loader
     .load(files)
