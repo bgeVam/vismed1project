@@ -55,13 +55,15 @@ window.addEventListener('resize', onWindowResize, false);
  function gui(stackHelperLeft, stackHelperRight) {
 
     var stackLeft = stackHelperLeft.stack;
-    var stackRight = stackHelperRight.stack;
+    var stackRight = stackHelperRight.stack;   
 
     var gui = new dat.GUI({
         autoPlace: false,
     });
     var customContainer = document.getElementById('my-gui-container');
     customContainer.appendChild(gui.domElement);
+
+    // switch visualization
     var switchVisualization = document.createElement('a');
     var linkText = document.createTextNode("Switch Visualizations");
     switchVisualization.appendChild(linkText);
@@ -69,7 +71,8 @@ window.addEventListener('resize', onWindowResize, false);
     switchVisualization.href = "viewers_compare.html";
     switchVisualization.setAttribute("class", "abc");
     customContainer.appendChild(switchVisualization);
-
+  
+    // slice
     var stackFolder = gui.addFolder('Slice');
     var index = stackFolder
         .add(stackHelperLeft, 'index', 0, stackLeft.dimensionsIJK.z - 1)
@@ -93,8 +96,7 @@ window.addEventListener('resize', onWindowResize, false);
     });
     stackFolder.open();
 
-
-    // slice
+    // image
     var sliceFolder = gui.addFolder('Image');
     var colorDepth = sliceFolder
         .add(stackHelperLeft.slice, 'windowWidth', 1, stackLeft.minMax[1] - stackLeft.minMax[0])
@@ -148,10 +150,6 @@ window.addEventListener('resize', onWindowResize, false);
        stackHelperRight.border.visible = stackHelperLeft.border.visible;
     });
     borderFolder.open();
-
-    // image settings
-    //var settingsFolder = gui.addFolder('<a href="test.html">link text</a>');
-    //settingsFolder.open();
 }
 
 /**
@@ -172,14 +170,30 @@ animate();
 // Setup loader
 var loader = new AMI.VolumeLoader(containerLeft);
 
+function fileName(state,mod,thickness,noise,rf) {
+    return 'nifti_'+state+'/'+mod+'_'+thickness+'mm_pn'+noise+'_rf'+rf+'.nii';
+}
+
+// variable for settings
+var settingsVar = {
+    modality: 'T2',
+    slicethickness: 9,
+    noise: 0,
+    rf: 0,
+}
+
 var images = [
-    'nifti_normal/T2_9mm_pn0_rf0.nii',//left  = normal
-    'nifti_lesion/T2_9mm_pn0_rf0.nii' //right = lesion
+    fileName('normal',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf),
+    fileName('lesion',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf)
 ];
+
+// var images = [
+//     'nifti_normal/T2_9mm_pn0_rf0.nii',//left  = normal
+//     'nifti_lesion/T2_9mm_pn0_rf0.nii' //right = lesion
+// ];
 var files = images.map(function(v) {
     return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
 });
-
 
 loader
     .load(files)
@@ -209,6 +223,7 @@ loader
         {
             throw new Error("Image size does not match");
         }
+
         // build the gui
         gui(stackHelperLeft, stackHelperRight);
 
