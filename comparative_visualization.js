@@ -3,64 +3,85 @@
 //Setup link
 var link = document.getElementById('ab');
 
-// Setup renderer left
-var containerLeft = document.getElementById('container_left');
-var rendererLeft = new THREE.WebGLRenderer({
-    antialias: true
-});
-rendererLeft.setSize(containerLeft.offsetWidth, containerLeft.offsetHeight);
-rendererLeft.setClearColor(0x353535, 1);
-rendererLeft.setPixelRatio(window.devicePixelRatio);
-containerLeft.appendChild(rendererLeft.domElement);
-
-// Setup renderer right
-var containerRight = document.getElementById('container_right');
-var rendererRight = new THREE.WebGLRenderer({
-    antialias: true
-});
-rendererRight.setSize(containerRight.offsetWidth, containerRight.offsetHeight);
-rendererRight.setClearColor(0x353535, 1);
-rendererRight.setPixelRatio(window.devicePixelRatio);
-containerRight.appendChild(rendererRight.domElement);
-
-// Setup scene
-var sceneLeft = new THREE.Scene();
-var sceneRight = new THREE.Scene();
-
-// Setup camera
-var camera = new THREE.PerspectiveCamera(45, containerLeft.offsetWidth / containerLeft.offsetHeight, 0.01, 10000000);
-camera.position.x = 150;
-camera.position.y = 150;
-camera.position.z = 100;
-
-// Setup controls
-var controlsLeft = new AMI.TrackballControl(camera, containerLeft);
-var controlsRight = new AMI.TrackballControl(camera, containerRight);
 /**
- * Handle window resize
- */
-function onWindowResize() {
-    camera.aspect = containerLeft.offsetWidth / containerLeft.offsetHeight;
-    camera.updateProjectionMatrix();
-
+initalize function
+*/
+function init() {
+    // Setup renderer left
+    containerLeft = document.getElementById('container_left');
+    rendererLeft = new THREE.WebGLRenderer({
+        antialias: true
+    });
     rendererLeft.setSize(containerLeft.offsetWidth, containerLeft.offsetHeight);
-    rendererRight.setSize(containerRight.offsetWidth, containerRight.offsetHeight);
-}
+    rendererLeft.setClearColor(0x353535, 1);
+    rendererLeft.setPixelRatio(window.devicePixelRatio);
+    containerLeft.appendChild(rendererLeft.domElement);
 
-window.addEventListener('resize', onWindowResize, false);
+    // Setup renderer right
+    containerRight = document.getElementById('container_right');
+    rendererRight = new THREE.WebGLRenderer({
+        antialias: true
+    });
+    rendererRight.setSize(containerRight.offsetWidth, containerRight.offsetHeight);
+    rendererRight.setClearColor(0x353535, 1);
+    rendererRight.setPixelRatio(window.devicePixelRatio);
+    containerRight.appendChild(rendererRight.domElement);
+
+    // Setup scene
+    sceneLeft = new THREE.Scene();
+    sceneRight = new THREE.Scene();
+
+    // Setup camera
+    camera = new THREE.PerspectiveCamera(45, containerLeft.offsetWidth / containerLeft.offsetHeight, 0.01, 10000000);
+    camera.position.x = 150;
+    camera.position.y = 150;
+    camera.position.z = 100;
+
+    // Setup controls
+    controlsLeft = new AMI.TrackballControl(camera, containerLeft);
+    controlsRight = new AMI.TrackballControl(camera, containerRight);
+
+
+    /**
+     * Handle window resize
+     */
+    function onWindowResize() {
+        camera.aspect = containerLeft.offsetWidth / containerLeft.offsetHeight;
+        camera.updateProjectionMatrix();
+
+        rendererLeft.setSize(containerLeft.offsetWidth, containerLeft.offsetHeight);
+        rendererRight.setSize(containerRight.offsetWidth, containerRight.offsetHeight);
+    }
+    window.addEventListener('resize', onWindowResize, false);
+    /**
+    Start animation loop
+    */
+    function animate() {
+        controlsLeft.update();
+        controlsRight.update();
+        rendererLeft.render(sceneLeft, camera);
+        rendererRight.render(sceneRight, camera);
+        // request new frame
+        requestAnimationFrame(function () {
+            animate();
+        });
+    }
+    animate();
+}
+init();
 
 /**
  * Build GUI
  */
- function gui(stackHelperLeft, stackHelperRight, settingsVar) {
+function gui(stackHelperLeft, stackHelperRight, settingsVar) {
 
     var stackLeft = stackHelperLeft.stack;
-    var stackRight = stackHelperRight.stack;   
+    var stackRight = stackHelperRight.stack;
     var settings = settingsVar;
     var params = {
         refresh: false,
         visualization: 'juxtaposition'
-    } 
+    }
 
     var gui = new dat.GUI({
         autoPlace: false,
@@ -72,9 +93,9 @@ window.addEventListener('resize', onWindowResize, false);
     var visualizationFolder = gui.addFolder('Visualization');
     var switchVis = visualizationFolder
         .add(params, 'visualization', ['juxtaposition', 'overlay']);
-    switchVis.onChange(function(value){
-        if (value=='overlay') {
-        window.location.href = "viewers_compare.html";
+    switchVis.onChange(function (value) {
+        if (value == 'overlay') {
+            window.location.href = "viewers_compare.html";
         }
     })
     visualizationFolder.open();
@@ -89,31 +110,48 @@ window.addEventListener('resize', onWindowResize, false);
     // image settings
     var settingsFolder = gui.addFolder('Settings');
     var mod = settingsFolder
-        .add(settingsVar, 'modality', ['T1','T2','PD'])      
+        .add(settingsVar, 'modality', ['T1', 'T2', 'PD'])
     var thickness = settingsFolder
-        .add(settingsVar, 'slicethickness', 1 , 9).step(1) // funktioniert noch nicht so wie es sollte!      
+        .add(settingsVar, 'slicethickness', 1, 9).step(1) // funktioniert noch nicht so wie es sollte!      
     var noise = settingsFolder
-        .add(settingsVar, 'noise',0 , 9).step(1) // funktioniert noch nicht so wie es sollte!     
+        .add(settingsVar, 'noise', 0, 9).step(1) // funktioniert noch nicht so wie es sollte!     
     var rf = settingsFolder
-        .add(settingsVar, 'rf', { '0%': 0, '20%': 20, '40%': 40 })   
+        .add(settingsVar, 'rf', { '0%': 0, '20%': 20, '40%': 40 })
+    var refresh = settingsFolder
+        .add(params, 'refresh');
+    refresh.onChange(function (value) {
+        if (settingsVar.slicethickness % 2 == 0) { // even slice thickness does not exist -> 
+            settingsVar.slicethickness = settingsVar.slicethickness - 1;
+        }
+        if ((settingsVar.noise % 2 == 0) && (settingsVar.noise != 0)) {
+            settingsVar.noise = settingsVar.noise - 1;
+        }
+        if (mod.isModified() || thickness.isModified() || noise.isModified || rf.isModified) {
+            // reload images with current settingsVar - noch nicht ganz richtig, da altes ebenfalls noch dargestellt wird
+            sceneRight.remove(stackHelperRight);
+            sceneLeft.remove(stackHelperLeft);
+            customContainer.removeChild(gui.domElement);
+            loadImages(filesName(settingsVar));
+        }
+    })
     settingsFolder.open();
-  
+
     // slice
     var stackFolder = gui.addFolder('Slice');
     var index = stackFolder
         .add(stackHelperLeft, 'index', 0, stackLeft.dimensionsIJK.z - 1)
         .step(1)
         .listen();
-    index.onChange(function(value) {
-       //update Right index
-       stackHelperRight.index = stackHelperLeft.index;
+    index.onChange(function (value) {
+        //update Right index
+        stackHelperRight.index = stackHelperLeft.index;
     });
 
     var orientation = stackFolder
         .add(stackHelperLeft, 'orientation', 0, 2)
         .step(1)
         .listen();
-    orientation.onChange(function(value) {
+    orientation.onChange(function (value) {
         index.__max = stackHelperLeft.orientationMaxIndex;
         stackHelperLeft.index = Math.floor(index.__max / 2);
         //update Right orientation and index
@@ -128,31 +166,31 @@ window.addEventListener('resize', onWindowResize, false);
         .add(stackHelperLeft.slice, 'windowWidth', 1, stackLeft.minMax[1] - stackLeft.minMax[0])
         .step(1)
         .listen();
-    colorDepth.onChange(function(value) {
-       //update Right colorDepth
-       stackHelperRight.slice.windowWidth = stackHelperLeft.slice.windowWidth;
+    colorDepth.onChange(function (value) {
+        //update Right colorDepth
+        stackHelperRight.slice.windowWidth = stackHelperLeft.slice.windowWidth;
     });
     var brightness = sliceFolder
         .add(stackHelperLeft.slice, 'windowCenter', stackLeft.minMax[0], stackLeft.minMax[1])
         .step(1)
         .listen();
-    brightness.onChange(function(value) {
-       //update Right brightness
-       stackHelperRight.slice.windowCenter = stackHelperLeft.slice.windowCenter;
+    brightness.onChange(function (value) {
+        //update Right brightness
+        stackHelperRight.slice.windowCenter = stackHelperLeft.slice.windowCenter;
     });
     var intensityAuto = sliceFolder
         .add(stackHelperLeft.slice, 'intensityAuto')
         .listen();
-    intensityAuto.onChange(function(value) {
-       //update Right intensityAuto
-       stackHelperRight.slice.intensityAuto = stackHelperLeft.slice.intensityAuto;
+    intensityAuto.onChange(function (value) {
+        //update Right intensityAuto
+        stackHelperRight.slice.intensityAuto = stackHelperLeft.slice.intensityAuto;
     });
     var invert = sliceFolder
         .add(stackHelperLeft.slice, 'invert')
         .listen();
-    invert.onChange(function(value) {
-       //update Right invert
-       stackHelperRight.slice.invert = stackHelperLeft.slice.invert;
+    invert.onChange(function (value) {
+        //update Right invert
+        stackHelperRight.slice.invert = stackHelperLeft.slice.invert;
     });
     sliceFolder.close();
 
@@ -160,9 +198,9 @@ window.addEventListener('resize', onWindowResize, false);
     var bboxFolder = gui.addFolder('Bounding Box');
     var boundingVisible = bboxFolder
         .add(stackHelperLeft.bbox, 'visible');
-    boundingVisible.onChange(function(value) {
-       //update Right invert
-       stackHelperRight.bbox.visible = stackHelperLeft.bbox.visible;
+    boundingVisible.onChange(function (value) {
+        //update Right invert
+        stackHelperRight.bbox.visible = stackHelperLeft.bbox.visible;
     });
     bboxFolder.close();
 
@@ -170,55 +208,39 @@ window.addEventListener('resize', onWindowResize, false);
     var borderFolder = gui.addFolder('Border');
     var borderVisible = borderFolder
         .add(stackHelperLeft.border, 'visible');
-    borderVisible.onChange(function(value) {
-       //update Right invert
-       stackHelperRight.border.visible = stackHelperLeft.border.visible;
+    borderVisible.onChange(function (value) {
+        //update Right invert
+        stackHelperRight.border.visible = stackHelperLeft.border.visible;
     });
     borderFolder.close();
 }
 
 /**
- * Start animation loop
- */
-function animate() {
-    controlsLeft.update();
-    controlsRight.update();
-    rendererLeft.render(sceneLeft, camera);
-    rendererRight.render(sceneRight, camera);
-    // request new frame
-    requestAnimationFrame(function() {
-        animate();
-    });
-}
-animate();
-
-/*
 Create (default) files with variable settings
 */
-
-function fileName(state,mod,thickness,noise,rf) {
-    return 'nifti_'+state+'/'+mod+'_'+thickness+'mm_pn'+noise+'_rf'+rf+'.nii';
+function fileName(state, mod, thickness, noise, rf) {
+    return 'nifti_' + state + '/' + mod + '_' + thickness + 'mm_pn' + noise + '_rf' + rf + '.nii';
 }
 
 function filesName(settingsVar) {
-    var images = [
-        fileName('normal',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf),
-        fileName('lesion',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf)
+    let images = [
+        fileName('normal', settingsVar.modality, settingsVar.slicethickness, settingsVar.noise, settingsVar.rf),
+        fileName('lesion', settingsVar.modality, settingsVar.slicethickness, settingsVar.noise, settingsVar.rf)
     ];
-    var files = images.map(function(v) {
+    let files = images.map(function (v) {
         return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
     });
     return files;
 }
 
 // variable for settings
-var settingsVar = {
+let settingsVar = {
     modality: 'T2',
     slicethickness: 9,
     noise: 0,
     rf: 0,
 }
-files = filesName(settingsVar);
+let files = filesName(settingsVar);
 
 // var images = [
 //     fileName('normal',settingsVar.modality,settingsVar.slicethickness,settingsVar.noise,settingsVar.rf),
@@ -236,13 +258,13 @@ files = filesName(settingsVar);
 /*
 Setup loader
 */
-function loadImages(files){
+function loadImages(files) {
 
     var loader = new AMI.VolumeLoader(containerLeft);
 
     loader
         .load(files)
-        .then(function() {
+        .then(function () {
 
             var series = loader.data[0].mergeSeries(loader.data);
             console.log("LEFT IS" + series[0]._seriesInstanceUID);
@@ -264,21 +286,20 @@ function loadImages(files){
             stackHelperRight.border.color = 0xf44336;
             sceneRight.add(stackHelperRight);
 
-            if (stackLeft._dimensionsIJK.z != stackRight._dimensionsIJK.z)
-            {
+            if (stackLeft._dimensionsIJK.z != stackRight._dimensionsIJK.z) {
                 throw new Error("Image size does not match");
             }
-
-            // build the gui
-            gui(stackHelperLeft, stackHelperRight, settingsVar);
 
             // center camera and interactor to center of bouding box
             var centerLPS = stackHelperLeft.stack.worldCenter();
             camera.lookAt(centerLPS.x, centerLPS.y, centerLPS.z);
             camera.updateProjectionMatrix();
             controlsLeft.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
+
+            // build the gui
+            gui(stackHelperLeft, stackHelperRight, settingsVar);
         })
-        .catch(function(error) {
+        .catch(function (error) {
             window.console.log('Failed to load images');
             window.console.log(error);
         });
