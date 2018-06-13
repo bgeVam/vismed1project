@@ -1,6 +1,8 @@
 /**
  * This class loads images into the visualizations.
  */
+var visualization1init = false;
+var visualization2init = false;
 var series;
 var container = document.getElementById('container');
 var imageParameters = {

@@ -66,9 +66,9 @@ function render() {
   //statsyay.update();
 }
 
-// FUNCTIONS
 function initVisualization2() {
-  
+  // init threeJS...
+    
   // this function is executed on each animation frame
   function animate() {
     render();
@@ -132,11 +132,6 @@ function initVisualization2() {
   }
   visualization2init = true;
   animate();
-}
-
-function startVisualization2() {
-  // init threeJS...
-  initVisualization2();
 
   /**
    * Build GUI

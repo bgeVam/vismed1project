@@ -1,5 +1,6 @@
-var visualization1init = false;
-var visualization2init = false;
+/**
+ * This class performs dynamic page loading.
+ */
 var visualization=1;
 
 function switchVisualizations() {
@@ -34,7 +35,7 @@ function loadVisualization2() {
     showHtmlElement('my-lut-canvases-l0');
     showHtmlElement('my-lut-canvases-l1');
     showHtmlElement('r3d');
-    startVisualization2();
+    initVisualization2();
 }
 
 function loadVisualization1() {
@@ -46,6 +47,5 @@ function loadVisualization1() {
     showHtmlElement('container_left');
     showHtmlElement('container_right');
     showHtmlElement('my-gui-container1');
-    console.log("init visualization1");
     initVisualization1();
 }
