@@ -1,4 +1,6 @@
-/* globals dat, AMI*/
+/**
+ * This class handels visualization1, the lut layer visualization.
+ */
 // standard global variables
 var controls2;
 var renderer2;
@@ -23,12 +25,9 @@ function onMouseMove(event) {
   uniformsLayerMix.uMouse.value = new THREE.Vector2(mouse.x, mouse.y);
 }
 
-//
 var sceneLayer0TextureTarget;
 var sceneLayer1TextureTarget;
-//
 var sceneLayer0;
-//
 var lutLayer0;
 var sceneLayer1;
 var meshLayer1;
@@ -66,9 +65,11 @@ function render() {
   //statsyay.update();
 }
 
+/**
+ * initalize function
+ */
 function initVisualization2() {
   // init threeJS...
-    
   // this function is executed on each animation frame
   function animate() {
     render();
@@ -408,22 +409,7 @@ function initVisualization2() {
       textures2.push(tex);
     }
 
-    //
     // create material && mesh then add it to sceneLayer1
-    //uniformsLayer1 = AMI.LayerUniformShader.uniforms();
-    /*
-        uniformsLayerMix = AMI.LayerUniformShader.uniforms();
-    uniformsLayerMix.uTextureBackTest0.value = sceneLayer0TextureTarget.texture;
-    uniformsLayerMix.uTextureBackTest1.value = sceneLayer1TextureTarget.texture;
-    uniformsLayerMix.uTrackMouse.value = 1;
-    uniformsLayerMix.uMouse.value = new THREE.Vector2(0, 0);
-    */
-        // create material && mesh then add it to sceneLayer1
-
-
-
-
-
     uniformsLayer1 = AMI.DataUniformShader.uniforms();
     uniformsLayer1.uTextureSize.value = stack2.textureSize;
     uniformsLayer1.uTextureContainer.value = textures2;
@@ -434,11 +420,9 @@ function initVisualization2() {
     uniformsLayer1.uPackedPerPixel.value = stack2.packedPerPixel;
     uniformsLayer1.uWindowCenterWidth.value = [stack2.windowCenter, stack2.windowWidth];
     uniformsLayer1.uRescaleSlopeIntercept.value = [stack2.rescaleSlope, stack2.rescaleIntercept];
-    uniformsLayer1.uDataDimensions.value = [stack2.dimensionsIJK.x,
-                                                stack2.dimensionsIJK.y,
-                                                stack2.dimensionsIJK.z];
-
+    uniformsLayer1.uDataDimensions.value = [stack2.dimensionsIJK.x, stack2.dimensionsIJK.y, stack2.dimensionsIJK.z];
     uniformsLayer1.uLut.value = [...stack2.minMax];
+    
     // generate shaders on-demand!
     var fs = new AMI.DataFragmentShader(uniformsLayer1);
     var vs = new AMI.DataVertexShader();
@@ -455,7 +439,6 @@ function initVisualization2() {
     meshLayer1.applyMatrix(stack._ijk2LPS);
     sceneLayer1.add(meshLayer1);
 
-    //
     // Create the Mix layer
     uniformsLayerMix = AMI.LayerUniformShader.uniforms();
     uniformsLayerMix.uTextureBackTest0.value = sceneLayer0TextureTarget.texture;
@@ -466,8 +449,8 @@ function initVisualization2() {
     // generate shaders on-demand!
     var fls = new AMI.LayerFragmentShader(uniformsLayerMix);
     var vls = new AMI.LayerVertexShader();
-    materialLayerMix = new THREE.ShaderMaterial(
-      {side: THREE.DoubleSide,
+    materialLayerMix = new THREE.ShaderMaterial({
+      side: THREE.DoubleSide,
       uniforms: uniformsLayerMix,
       vertexShader: vls.compute(),
       fragmentShader: fls.compute(),
@@ -510,11 +493,11 @@ function initVisualization2() {
     // CREATE LUT
     domTarget0 = document.getElementById('my-lut-canvases-l0');    
     domTarget1 = document.getElementById('my-lut-canvases-l1');
-    if (domTarget0.children.length > 0){
+    if (domTarget0.children.length > 0) {
       domTarget0.removeChild(domTarget0.children[1]);
       domTarget0.removeChild(domTarget0.children[0]);
     }
-    if (domTarget1.children.length > 0){
+    if (domTarget1.children.length > 0) {
       domTarget1.removeChild(domTarget1.children[1]);
       domTarget1.removeChild(domTarget1.children[0]);
     }
@@ -538,8 +521,5 @@ function initVisualization2() {
 
     buildGUI(stackHelper,imageParameters);
   }
-
-
   loadImagesVisualization2();
-
 };

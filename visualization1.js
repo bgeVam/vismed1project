@@ -1,12 +1,10 @@
-/* globals dat, AMI*/
-
-
-//Setup link
-var link = document.getElementById('ab');
+/**
+ * This class handels visualization1, the splitscreen visualization.
+ */
 
 /**
-initalize function
-*/
+ * initalize function
+ */
 function initVisualization1() {
 
     if (visualization1init == false) {
@@ -81,7 +79,7 @@ function initVisualization1() {
 /**
  * Build GUI
  */
- function gui(stackHelperLeft, stackHelperRight, imageParameters) {
+ function buildGUI(stackHelperLeft, stackHelperRight, imageParameters) {
 
     var stackLeft = stackHelperLeft.stack;
     var stackRight = stackHelperRight.stack;
@@ -250,7 +248,7 @@ function loadImagesVisualization1() {
     controlsLeft.target.set(centerLPS.x, centerLPS.y, centerLPS.z);
 
     // build the gui
-    gui(stackHelperLeft, stackHelperRight, imageParameters);
+    buildGUI(stackHelperLeft, stackHelperRight, imageParameters);
 
 }
 
