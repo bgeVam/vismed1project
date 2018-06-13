@@ -94,11 +94,10 @@ body{
 }
 
 /* URL */
-.button {
+.switch-visualizations-button {
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
-
     width: 50px;
     left: 0;
     top: 0;
