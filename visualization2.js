@@ -141,7 +141,7 @@ function startVisualization2() {
   /**
    * Build GUI
    */
-  function buildGUI(stackHelper, settingsVar) {
+  function buildGUI(stackHelper, imageParameters) {
     function updateLayer1() {
       // update layer1 geometry...
       if (meshLayer1) {
@@ -203,29 +203,29 @@ function startVisualization2() {
     //
     var settingsFolder = gui.addFolder('Settings');
     var mod = settingsFolder
-        .add(settingsVar, 'modality', ['T1','T2','PD'])      
+        .add(imageParameters, 'modality', ['T1','T2','PD'])      
     var thickness = settingsFolder
-        .add(settingsVar, 'slicethickness', 1 , 9).step(1) // funktioniert noch nicht so wie es sollte!      
+        .add(imageParameters, 'slicethickness', 1 , 9).step(1) // funktioniert noch nicht so wie es sollte!      
     var noise = settingsFolder
-        .add(settingsVar, 'noise',0 , 9).step(1) // funktioniert noch nicht so wie es sollte!     
+        .add(imageParameters, 'noise',0 , 9).step(1) // funktioniert noch nicht so wie es sollte!     
     var rf = settingsFolder
-        .add(settingsVar, 'rf', { '0%': 0, '20%': 20, '40%': 40 })   
+        .add(imageParameters, 'rf', { '0%': 0, '20%': 20, '40%': 40 })   
     var refresh = settingsFolder
         .add(params, 'refresh');
     refresh.onChange(function (value) {
-      if (settingsVar.slicethickness % 2 == 0) { // even slice thickness does not exist -> 
-          settingsVar.slicethickness = settingsVar.slicethickness - 1;
+      if (imageParameters.slicethickness % 2 == 0) { // even slice thickness does not exist -> 
+          imageParameters.slicethickness = imageParameters.slicethickness - 1;
       }
-      if ((settingsVar.noise % 2 == 0) && (settingsVar.noise != 0)) {
-          settingsVar.noise = settingsVar.noise - 1;
+      if ((imageParameters.noise % 2 == 0) && (imageParameters.noise != 0)) {
+          imageParameters.noise = imageParameters.noise - 1;
       }
       if (mod.isModified() || thickness.isModified() || noise.isModified() || rf.isModified()) {
-          // reload images with current settingsVar
+          // reload images with current imageParameters
           sceneLayer0.remove(stackHelper);
           sceneLayer1.remove(meshLayer1);
           sceneLayerMix.remove(meshLayerMix);
           customContainer2.removeChild(gui.domElement);
-          loadFiles(filesName(settingsVar));
+          loadFiles(filesName(imageParameters));
       }
     })    
     settingsFolder.open();
@@ -541,7 +541,7 @@ function startVisualization2() {
     lutLayer1.luts = AMI.LutHelper.presetLuts();
     layer1.lut = lutLayer1;
 
-    buildGUI(stackHelper,settingsVar);
+    buildGUI(stackHelper,imageParameters);
   }
 
 
