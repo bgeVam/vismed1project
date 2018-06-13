@@ -1,31 +1,30 @@
 /**
-Create (default) files with variable settings
-*/
+ * This class loads images into the visualizations.
+ */
 var series;
 var container = document.getElementById('container');
-
-
-function fileName(state, mod, thickness, noise, rf) {
-    return 'nifti_' + state + '/' + mod + '_' + thickness + 'mm_pn' + noise + '_rf' + rf + '.nii';
-}
-
-function filesName(imageParameters) {
-    var images = [
-    fileName('normal', imageParameters.modality, imageParameters.slicethickness, imageParameters.noise, imageParameters.rf),
-    fileName('lesion', imageParameters.modality, imageParameters.slicethickness, imageParameters.noise, imageParameters.rf)
-    ];
-    var files = images.map(function (v) {
-     return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
- });
-    return files;
-}
-
-// variable for settings
 var imageParameters = {
     modality: 'T2',
     slicethickness: 9,
     noise: 0,
     rf: 0
+}
+
+function buildFileName(state, mod, thickness, noise, rf) {
+    return 'nifti_' + state + '/' + mod + '_' + thickness + 'mm_pn' + noise + '_rf' + rf + '.nii';
+}
+
+function filesName(imageParameters) {
+    var images = [
+    buildFileName('normal', imageParameters.modality, imageParameters.slicethickness, imageParameters.noise, imageParameters.rf),
+    buildFileName('lesion', imageParameters.modality, imageParameters.slicethickness, imageParameters.noise, imageParameters.rf)
+    ];
+    var files = images.map(
+        function (v) {
+         return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
+     }
+     );
+    return files;
 }
 
 loadFiles(filesName(imageParameters));
@@ -41,10 +40,10 @@ function loadFiles(files) {
         loadImagesVisualization1();
         if (visualization2init == true) {
            loadImagesVisualization2();
-        }
-        universalLoader.free();
-        universalLoader = null;
-    })
+       }
+       universalLoader.free();
+       universalLoader = null;
+   })
     .catch(function (error) {
         window.console.log('Failed to load images');
         window.console.log(error);
