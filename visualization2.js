@@ -89,7 +89,7 @@ function initVisualization2() {
     alpha: true,
   });
   renderer2.setSize(threeD.clientWidth, threeD.clientHeight);
-  renderer2.setClearColor(0x3F51B5, 1);
+  renderer2.setClearColor(0x353535, 1);
 
   threeD.appendChild(renderer2.domElement);
 
@@ -157,8 +157,7 @@ function initVisualization2() {
         // meshLayerMix.geometry = null;
 
         // add mesh in this scene with right shaders...
-        meshLayerMix =
-          new THREE.Mesh(stackHelper.slice.geometry, materialLayerMix);
+        meshLayerMix = new THREE.Mesh(stackHelper.slice.geometry, materialLayerMix);
         // go the LPS space
         meshLayerMix.applyMatrix(stackHelper.stack._ijk2LPS);
 
@@ -189,7 +188,7 @@ function initVisualization2() {
         .add(params, 'visualization', ['juxtaposition', 'overlay']);
     switchVis.onChange(function(value){
         if (value=='juxtaposition') {
-        window.location.href = "index.html";
+          switchVisualizations();
         }
     })
     visualizationFolder.open();

@@ -90,7 +90,7 @@ function initVisualization1() {
     }
 
     var gui = new dat.GUI({
-        autoPlace: false,
+        autoPlace: false
     });
     var customContainer1 = document.getElementById('my-gui-container1');
     while (customContainer1.firstChild) {
@@ -104,7 +104,7 @@ function initVisualization1() {
     .add(params, 'visualization', ['juxtaposition', 'overlay']);
     switchVis.onChange(function (value) {
         if (value == 'overlay') {
-            window.location.href = "viewers_compare.html";
+            switchVisualizations();
         }
     })
     visualizationFolder.open();
@@ -251,4 +251,3 @@ function loadImagesVisualization1() {
     buildGUI(stackHelperLeft, stackHelperRight, imageParameters);
 
 }
-

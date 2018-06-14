@@ -9,7 +9,7 @@ body{
   height: 100%;
   width: 100%;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   overflow: hidden;
   padding-top: 20px;
@@ -18,22 +18,24 @@ body{
 
 /* Control the left side */
 .left {
-  left: 0;
-  width: 38%;
+  right: 59%;
+  width: 42%;
+  z-index:2;
 }
 
 /* Control the right side */
 .right {
-  position: fixed;
-  right: 22%;
-  width: 38%;
+  /*position: fixed;*/
+  right: 15%;
+  z-index:2;
+  width: 42%;
 }
 
 /* Control the toolbox */
 .my-gui-container {
   position: fixed;
-  width: 22%;
-  right: 0;
+  right: 0%;
+  width: 15%;
   top: 0;
   z-index:2;
   background-color: #212121
@@ -91,23 +93,4 @@ body{
   position: absolute;
   top: 0;
   left: 0;
-}
-
-/* URL */
-.switch-visualizations-button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    width: 50px;
-    left: 0;
-    top: 0;
-    z-index:3;
-    padding-top: 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    position: absolute;
-    margin-bottom: 1px;
-    margin-left: 2px;
 }
