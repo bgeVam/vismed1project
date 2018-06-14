@@ -229,11 +229,16 @@ function initVisualization2() {
     // layer 0 folder
     //
     var layer0Folder = gui.addFolder('Layer 0 (Base)');
-    layer0Folder.add(
-      stackHelper.slice, 'windowWidth', 1, stack.minMax[1]).step(1).listen();
-    layer0Folder.add(
-      stackHelper.slice, 'windowCenter',
-      stack.minMax[0], stack.minMax[1]).step(1).listen();
+    layer0Folder
+    .add(stackHelper.slice, 'windowWidth', 1, stack.minMax[1])
+    .name('Gray Levels')
+    .step(1)
+    .listen();
+    layer0Folder
+    .add(stackHelper.slice, 'windowCenter', stack.minMax[0], stack.minMax[1])
+    .name('Intensity')
+    .step(1)
+    .listen();
     layer0Folder.add(stackHelper.slice, 'intensityAuto');
     layer0Folder.add(stackHelper.slice, 'invert');
 

@@ -168,6 +168,7 @@ function initVisualization1() {
     var sliceFolder = gui.addFolder('Image');
     var colorDepth = sliceFolder
     .add(stackHelperLeft.slice, 'windowWidth', 1, stackLeft.minMax[1] - stackLeft.minMax[0])
+    .name('Gray Levels')
     .step(1)
     .listen();
     colorDepth.onChange(function (value) {
@@ -176,6 +177,7 @@ function initVisualization1() {
     });
     var brightness = sliceFolder
     .add(stackHelperLeft.slice, 'windowCenter', stackLeft.minMax[0], stackLeft.minMax[1])
+    .name('Intensity')
     .step(1)
     .listen();
     brightness.onChange(function (value) {
@@ -233,7 +235,6 @@ function loadImagesVisualization1() {
       stackLeft = series[0].stack[0];
       stackRight = series[1].stack[0];
     }
-
 
     // be carefull that series and target stack exist!
     var stackHelperLeft = new AMI.StackHelper(stackLeft);
