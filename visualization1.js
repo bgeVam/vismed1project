@@ -222,8 +222,18 @@ function initVisualization1() {
 function loadImagesVisualization1() {
     //console.log("LEFT IS" + series[0]._seriesInstanceUID);
     //console.log("RIGHT IS" + series[1]._seriesInstanceUID);
-    var stackLeft = series[0].stack[0];
-    var stackRight = series[1].stack[0];
+    var stackLeft = null;
+    var stackRight = null;
+
+    //Fix layers: Lesion always left
+    if (series[0].seriesInstanceUID.includes("nifti_normal")) {
+      stackLeft = series[1].stack[0];
+      stackRight = series[0].stack[0];
+    } else {
+      stackLeft = series[0].stack[0];
+      stackRight = series[1].stack[0];
+    }
+
 
     // be carefull that series and target stack exist!
     var stackHelperLeft = new AMI.StackHelper(stackLeft);

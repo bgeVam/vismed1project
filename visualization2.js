@@ -361,16 +361,14 @@ function initVisualization2() {
     var stack = null;
     var stack2 = null;
 
-    if (series[0].seriesInstanceUID !== 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/nifti_normal/T2_9mm_pn0_rf0.nii') {
-      stack = series[1].stack[0];
-      stack2 = series[0].stack[0];
-    } else {
+    //Fix layers: Lesion always on top
+    if (series[0].seriesInstanceUID.includes("nifti_normal")) {
       stack = series[0].stack[0];
       stack2 = series[1].stack[0];
+    } else {
+      stack = series[1].stack[0];
+      stack2 = series[0].stack[0];
     }
-
-    stack = series[0].stack[0];
-    stack2 = series[1].stack[0];
 
     var stackHelper = new AMI.StackHelper(stack);
     stackHelper.bbox.visible = false;
