@@ -166,22 +166,22 @@ function initVisualization1() {
 
     // image
     var sliceFolder = gui.addFolder('Image');
-    var colorDepth = sliceFolder
+    var grayLevel = sliceFolder
     .add(stackHelperLeft.slice, 'windowWidth', 1, stackLeft.minMax[1] - stackLeft.minMax[0])
     .name('Gray Levels')
     .step(1)
     .listen();
-    colorDepth.onChange(function (value) {
-        //update Right colorDepth
+    grayLevel.onChange(function (value) {
+        //update Right grayLevel
         stackHelperRight.slice.windowWidth = stackHelperLeft.slice.windowWidth;
     });
-    var brightness = sliceFolder
+    var intensity = sliceFolder
     .add(stackHelperLeft.slice, 'windowCenter', stackLeft.minMax[0], stackLeft.minMax[1])
     .name('Intensity')
     .step(1)
     .listen();
-    brightness.onChange(function (value) {
-        //update Right brightness
+    intensity.onChange(function (value) {
+        //update Right intensity
         stackHelperRight.slice.windowCenter = stackHelperLeft.slice.windowCenter;
     });
     var intensityAuto = sliceFolder
