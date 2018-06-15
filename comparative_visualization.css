@@ -94,3 +94,62 @@ body{
   top: 0;
   left: 0;
 }
+
+
+.container.progress {
+  font-size: 2.4em;
+  text-align: center;
+  width: 200px;
+  height: 8px;
+  position: absolute;
+  background-color: rgba(158, 158, 158, 0.5);
+  z-index: 4;
+  border: 1px solid;
+  box-sizing: border-box;
+  left: 42%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.progress.load{
+
+  box-sizing: border-box;
+  border: 3px solid;
+  width: 0%;
+  transform: translateZ(0); 
+
+}
+
+.progress.parse{
+
+  display: none;
+  transform: translateZ(0); 
+
+}
+
+.beat {
+
+  color: #E91E63;
+  -webkit-animation: love .5s infinite linear alternate-reverse;
+  -moz-animation: love .5s infinite linear alternate-reverse;
+  animation: love .5s infinite linear alternate-reverse;
+
+}
+
+@keyframes love {
+
+  animation-name: love;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-delay: initial;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+  animation-fill-mode: initial;
+  animation-play-state: initial;
+  0% {
+    transform: scale(1.3);
+    }
+  100% {
+    transform: scale(1.7);
+  }

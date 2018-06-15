@@ -1,18 +1,15 @@
 /**
  * This class performs dynamic page loading.
  */
-var visualization=1;
+var visualization = 1;
 
 function switchVisualizations() {
-    if (visualization==1)
-    {
+    if (visualization == 1) {
         loadOverlay();
-        visualization=2;
-    }
-    else if (visualization==2)
-    {
+        visualization = 2;
+    } else if (visualization == 2) {
         loadJuxtaposition();
-        visualization=1;
+        visualization = 1;
     }
 }
 
