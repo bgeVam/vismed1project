@@ -25,7 +25,7 @@ var CustomProgressBar = function(container) {
         container.classList.add('progress');
         container.classList.add('container');
         container.innerHTML =
-            '<div class="progress load"></div><div class="progress parse">Parsing data <div class="beat">♥</div></div>';
+            '<div class="progress load"></div><div class="progress parse">Loading image... <div class="beat">♥</div></div>';
         this._container.appendChild(container);
         // start rendering loop
         this.updateUI();
