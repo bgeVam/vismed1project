@@ -1,8 +1,8 @@
 /**
  * This class loads images into the visualizations.
  */
-var visualization1init = false;
-var visualization2init = false;
+var juxtapositioninit = false;
+var overlayinit = false;
 var series;
 var container = document.getElementById('container');
 var imageParameters = {
@@ -39,9 +39,9 @@ function loadFiles(files) {
     .load(files)
     .then(function () { 
         series = universalLoader.data[0].mergeSeries(universalLoader.data);
-        loadImagesVisualization1();
-        if (visualization2init == true) {
-           loadImagesVisualization2();
+        loadImagesJuxtaposition();
+        if (overlayinit == true) {
+           loadImagesOverlay();
        }
        universalLoader.free();
        universalLoader = null;

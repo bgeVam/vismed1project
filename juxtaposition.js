@@ -1,13 +1,13 @@
 /**
- * This class handels visualization1, the splitscreen visualization.
+ * This class handels the juxtaposition visualization.
  */
 
 /**
  * initalize function
  */
-function initVisualization1() {
+function initJuxtaposition() {
 
-    if (visualization1init == false) {
+    if (juxtapositioninit == false) {
     // Setup renderer left
     containerLeft = document.getElementById('container_left');
     rendererLeft = new THREE.WebGLRenderer({
@@ -41,7 +41,7 @@ function initVisualization1() {
     // Setup controls
     controlsLeft = new AMI.TrackballControl(camera1, containerLeft);
     controlsRight = new AMI.TrackballControl(camera1, containerRight);
-    visualization1init = true;
+    juxtapositioninit = true;
 }
 
 
@@ -134,8 +134,6 @@ function initVisualization1() {
             sceneLeft.remove(stackHelperLeft);
             customContainer1.removeChild(gui.domElement);
             loadFiles(filesName(imageParameters));
-            //filesName(imageParameters)
-            //loadImagesVisualization1();
         }
     })
         settingsFolder.open();
@@ -221,7 +219,7 @@ function initVisualization1() {
     borderFolder.close();
 }
 
-function loadImagesVisualization1() {
+function loadImagesJuxtaposition() {
     //console.log("LEFT IS" + series[0]._seriesInstanceUID);
     //console.log("RIGHT IS" + series[1]._seriesInstanceUID);
     var stackLeft = null;

@@ -1,5 +1,5 @@
 /**
- * This class handels visualization1, the lut layer visualization.
+ * This class handels the overlay visualization.
  */
 // standard global variables
 var controls2;
@@ -68,7 +68,7 @@ function render() {
 /**
  * initalize function
  */
-function initVisualization2() {
+function initOverlay() {
   // init threeJS...
   // this function is executed on each animation frame
   function animate() {
@@ -80,7 +80,7 @@ function initVisualization2() {
     });
   }
 
-  if (visualization2init==false)
+  if (overlayinit==false)
   {
   // renderer2
   threeD = document.getElementById('r3d');
@@ -131,7 +131,7 @@ function initVisualization2() {
   controls2.noRotate = true;
   camera2.controls = controls2;
   }
-  visualization2init = true;
+  overlayinit = true;
   animate();
 
   /**
@@ -348,7 +348,7 @@ function initVisualization2() {
   /**
    * Loader 
    */
-  function loadImagesVisualization2(){
+  function loadImagesOverlay(){
 
       updateSeries();
       // force 1st render
@@ -523,5 +523,5 @@ function initVisualization2() {
 
     buildGUI(stackHelper,imageParameters);
   }
-  loadImagesVisualization2();
+  loadImagesOverlay();
 };

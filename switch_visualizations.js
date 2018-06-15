@@ -6,12 +6,12 @@ var visualization=1;
 function switchVisualizations() {
     if (visualization==1)
     {
-        loadVisualization2();
+        loadOverlay();
         visualization=2;
     }
     else if (visualization==2)
     {
-        loadVisualization1();
+        loadJuxtaposition();
         visualization=1;
     }
 }
@@ -26,7 +26,7 @@ function showHtmlElement(htmlElementId) {
     htmlElement.style.display = "block";
 }
 
-function loadVisualization2() {
+function loadOverlay() {
     hideHtmlElement('container_left');
     hideHtmlElement('container_right');
     hideHtmlElement('my-gui-container1');
@@ -35,10 +35,10 @@ function loadVisualization2() {
     showHtmlElement('my-lut-canvases-l0');
     showHtmlElement('my-lut-canvases-l1');
     showHtmlElement('r3d');
-    initVisualization2();
+    initOverlay();
 }
 
-function loadVisualization1() {
+function loadJuxtaposition() {
     hideHtmlElement('my-gui-container2');
     hideHtmlElement('my-lut-container');
     hideHtmlElement('my-lut-canvases-l0');
@@ -47,5 +47,5 @@ function loadVisualization1() {
     showHtmlElement('container_left');
     showHtmlElement('container_right');
     showHtmlElement('my-gui-container1');
-    initVisualization1();
+    initJuxtaposition();
 }
