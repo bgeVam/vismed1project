@@ -23,7 +23,7 @@ function filesName(imageParameters) {
     ];
     var files = images.map(
         function (v) {
-         return 'https://cdn.rawgit.com/bgeVam/vismed1project/master/data/' + v;
+         return 'data/' + v;
      }
      );
     return files;
