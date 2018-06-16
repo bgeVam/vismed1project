@@ -38,9 +38,9 @@ function initJuxtaposition() {
 
         // Setup camera1
         camera1 = new THREE.PerspectiveCamera(45, containerLeft.offsetWidth / containerLeft.offsetHeight, 0.01, 10000000);
-        camera1.position.x = 150;
-        camera1.position.y = 150;
-        camera1.position.z = 100;
+        camera1.position.x = 360;//150;
+        camera1.position.y = 360;//150;
+        camera1.position.z = 450;//100;
 
         // Setup controls
         controlsLeft = new AMI.TrackballControl(camera1, containerLeft);
