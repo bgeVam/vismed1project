@@ -91,14 +91,41 @@ function buildOverlayGUI(stackHelper, imageParameters) {
     overlayGUI = new dat.GUI({
         autoPlace: false,
     });
+
     customContainer2 = document.getElementById('my-gui-container2');
     while (customContainer2.firstChild) {
         customContainer2.removeChild(customContainer2.firstChild);
     }
     customContainer2.appendChild(overlayGUI.domElement);
+
     var params = {
-        refresh: false,
         visualization: 'overlay'
+    }
+
+    var refreshButton = function(imageParameters){
+        this.mod = imageParameters.modality;
+        this.thickness = imageParameters.slicethickness;
+        this.noise = imageParameters.noise;
+        this.rf = imageParameters.rf;
+        this.refreshSwitch = function(imageParameters){
+            if (this.mod!=imageParameters.modality || this.thickness!=imageParameters.slicethickness || this.noise != imageParameters.noise || this.rf != imageParameters.rf){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        this.refresh = function(){
+            if (this.refreshSwitch(imageParameters)){
+                if (imageParameters.slicethickness % 2 == 0) { // even slice thickness does not exist -> 
+                    imageParameters.slicethickness = imageParameters.slicethickness - 1;
+                }
+                if ((imageParameters.noise % 2 == 0) && (imageParameters.noise != 0)) {
+                    imageParameters.noise = imageParameters.noise - 1;
+                }
+                loadFiles(filesName(imageParameters));
+            }
+        }
     }
 
     //
@@ -130,20 +157,9 @@ function buildOverlayGUI(stackHelper, imageParameters) {
             '20%': 20,
             '40%': 40
         })
+    var button = new refreshButton(imageParameters);
     var refresh = settingsFolder
-        .add(params, 'refresh');
-    refresh.onChange(function(value) {
-        if (imageParameters.slicethickness % 2 == 0) { // even slice thickness does not exist -> 
-            imageParameters.slicethickness = imageParameters.slicethickness - 1;
-        }
-        if ((imageParameters.noise % 2 == 0) && (imageParameters.noise != 0)) {
-            imageParameters.noise = imageParameters.noise - 1;
-        }
-        if (mod.isModified() || thickness.isModified() || noise.isModified() || rf.isModified()) {
-            // reload images with current imageParameters
-            loadFiles(filesName(imageParameters));
-        }
-    })
+        .add(button,'refresh');
     settingsFolder.open();
 
     //
