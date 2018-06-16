@@ -133,7 +133,8 @@ function buildOverlayGUI(stackHelper, imageParameters) {
     //
     var visualizationFolder = overlayGUI.addFolder('Visualization');
     var switchVis = visualizationFolder
-        .add(params, 'visualization', ['juxtaposition', 'overlay']);
+        .add(params, 'visualization', ['juxtaposition', 'overlay'])
+        .name('Visualization');
     switchVis.onChange(function(value) {
         if (value == 'juxtaposition') {
             switchVisualizations();
@@ -147,25 +148,39 @@ function buildOverlayGUI(stackHelper, imageParameters) {
     var settingsFolder = overlayGUI.addFolder('Settings');
     var mod = settingsFolder
         .add(imageParameters, 'modality', ['T1', 'T2', 'PD'])
+        .name('Modality');
     var thickness = settingsFolder
-        .add(imageParameters, 'slicethickness', 1, 9).step(1) // funktioniert noch nicht so wie es sollte!      
+        .add(imageParameters, 'slicethickness', 1, 9).step(1) // funktioniert noch nicht so wie es sollte! 
+        .name('Slice thickness');     
     var noise = settingsFolder
-        .add(imageParameters, 'noise', 0, 9).step(1) // funktioniert noch nicht so wie es sollte!     
+        .add(imageParameters, 'noise', 0, 9).step(1) // funktioniert noch nicht so wie es sollte!  
+        .name('Noise level');  
     var rf = settingsFolder
         .add(imageParameters, 'rf', {
             '0%': 0,
             '20%': 20,
             '40%': 40
         })
+        .name('RF');
     var button = new refreshButton(imageParameters);
     var refresh = settingsFolder
-        .add(button,'refresh');
+        .add(button,'refresh')
+        .name('Refresh images');
     settingsFolder.open();
 
     //
     // layer 0 folder
     //
     var layer0Folder = overlayGUI.addFolder('Layer 0 (Normal)');
+    
+    var indexUpdate = layer0Folder
+        .add(stackHelper, 'index', 0, stack.dimensionsIJK.z - 1)
+        .name('Slice index')
+        .step(1).listen();
+    indexUpdate.onChange(function() {
+        updateLayer1();
+        updateLayerMix();
+    });
     layer0Folder
         .add(stackHelper.slice, 'windowWidth', 1, stack.minMax[1])
         .name('Gray Levels')
@@ -176,21 +191,18 @@ function buildOverlayGUI(stackHelper, imageParameters) {
         .name('Intensity')
         .step(1)
         .listen();
-    layer0Folder.add(stackHelper.slice, 'intensityAuto');
-    layer0Folder.add(stackHelper.slice, 'invert');
+    layer0Folder
+        .add(stackHelper.slice, 'intensityAuto')
+        .name('Refresh Intensity');
+    layer0Folder
+        .add(stackHelper.slice, 'invert')
+        .name('Invert');
 
     var lutUpdate = layer0Folder.add(
         stackHelper.slice, 'lut', lutLayer0.lutsAvailable());
     lutUpdate.onChange(function(value) {
         lutLayer0.lut = value;
         stackHelper.slice.lutTexture = lutLayer0.texture;
-    });
-
-    var indexUpdate = layer0Folder.add(
-        stackHelper, 'index', 0, stack.dimensionsIJK.z - 1).step(1).listen();
-    indexUpdate.onChange(function() {
-        updateLayer1();
-        updateLayerMix();
     });
 
     layer0Folder.open();

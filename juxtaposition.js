@@ -129,7 +129,8 @@ function buildJuxtapositionGUI(stackHelperLeft, stackHelperRight, imageParameter
     // switch visualization
     var visualizationFolder = juxtapositionGUI.addFolder('Visualization');
     var switchVis = visualizationFolder
-        .add(params, 'visualization', ['juxtaposition', 'overlay']);
+        .add(params, 'visualization', ['juxtaposition', 'overlay'])
+        .name('Visualization');
     switchVis.onChange(function(value) {
         if (value == 'overlay') {
             switchVisualizations();
@@ -141,25 +142,31 @@ function buildJuxtapositionGUI(stackHelperLeft, stackHelperRight, imageParameter
     var settingsFolder = juxtapositionGUI.addFolder('Settings');
     var mod = settingsFolder
         .add(imageParameters, 'modality', ['T1', 'T2', 'PD'])
+        .name('Modality');
     var thickness = settingsFolder
-        .add(imageParameters, 'slicethickness', 1, 9).step(1) // funktioniert noch nicht so wie es sollte!      
+        .add(imageParameters, 'slicethickness', 1, 9).step(1) // funktioniert noch nicht so wie es sollte!  
+        .name('Slice thickness');  
     var noise = settingsFolder
-        .add(imageParameters, 'noise', 0, 9).step(1) // funktioniert noch nicht so wie es sollte!     
+        .add(imageParameters, 'noise', 0, 9).step(1) // funktioniert noch nicht so wie es sollte! 
+        .name('Noise level');   
     var rf = settingsFolder
         .add(imageParameters, 'rf', {
             '0%': 0,
             '20%': 20,
             '40%': 40
         })
+        .name('RF');
     var button = new refreshButton(imageParameters);
     var refresh = settingsFolder
-        .add(button,'refresh');
+        .add(button,'refresh')
+        .name('Refresh images')
     settingsFolder.open();
 
     // slice
     var stackFolder = juxtapositionGUI.addFolder('Slice');
     var index = stackFolder
         .add(stackHelperLeft, 'index', 0, stackLeft.dimensionsIJK.z - 1)
+        .name('Slice index')
         .step(1)
         .listen();
     index.onChange(function(value) {
@@ -169,6 +176,7 @@ function buildJuxtapositionGUI(stackHelperLeft, stackHelperRight, imageParameter
 
     var orientation = stackFolder
         .add(stackHelperLeft, 'orientation', 0, 2)
+        .name('Orientation')
         .step(1)
         .listen();
     orientation.onChange(function(value) {
@@ -202,6 +210,7 @@ function buildJuxtapositionGUI(stackHelperLeft, stackHelperRight, imageParameter
     });
     var intensityAuto = sliceFolder
         .add(stackHelperLeft.slice, 'intensityAuto')
+        .name('Reset Intensity')
         .listen();
     intensityAuto.onChange(function(value) {
         //update Right intensityAuto
@@ -209,6 +218,7 @@ function buildJuxtapositionGUI(stackHelperLeft, stackHelperRight, imageParameter
     });
     var invert = sliceFolder
         .add(stackHelperLeft.slice, 'invert')
+        .name('Invert')
         .listen();
     invert.onChange(function(value) {
         //update Right invert
