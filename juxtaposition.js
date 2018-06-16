@@ -114,7 +114,8 @@ function buildJuxtapositionGUI(stackHelperLeft, stackHelperRight, imageParameter
     }
 
     var params = {
-        visualization: 'juxtaposition',        
+        visualization: 'juxtaposition',
+        orientation: 0        
     }
 
     juxtapositionGUI = new dat.GUI({
@@ -173,13 +174,15 @@ function buildJuxtapositionGUI(stackHelperLeft, stackHelperRight, imageParameter
         //update Right index
         stackHelperRight.index = stackHelperLeft.index;
     });
-
     var orientation = stackFolder
-        .add(stackHelperLeft, 'orientation', 0, 2)
+        .add(params,'orientation', {
+            axial: 0,
+            sagittal: 1,
+            coronal: 2
+        })
         .name('Orientation')
-        .step(1)
-        .listen();
     orientation.onChange(function(value) {
+        stackHelperLeft.orientation = Number(value);
         index.__max = stackHelperLeft.orientationMaxIndex;
         stackHelperLeft.index = Math.floor(index.__max / 2);
         //update Right orientation and index
