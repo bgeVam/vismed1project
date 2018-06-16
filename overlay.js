@@ -149,7 +149,7 @@ function buildOverlayGUI(stackHelper, imageParameters) {
     //
     // layer 0 folder
     //
-    var layer0Folder = overlayGUI.addFolder('Layer 0 (Base)');
+    var layer0Folder = overlayGUI.addFolder('Layer 0 (Normal)');
     layer0Folder
         .add(stackHelper.slice, 'windowWidth', 1, stack.minMax[1])
         .name('Gray Levels')
@@ -177,23 +177,12 @@ function buildOverlayGUI(stackHelper, imageParameters) {
         updateLayerMix();
     });
 
-    layer0Folder.add(stackHelper.slice, 'interpolation', 0, 1).step(1).listen();
-
     layer0Folder.open();
 
     //
     // layer 1 folder
     //
-    var layer1Folder = overlayGUI.addFolder('Layer 1');
-    var interpolationLayer1 =
-        layer1Folder.add(layer1, 'interpolation', 0, 1).step(1).listen();
-    interpolationLayer1.onChange(function(value) {
-        uniformsLayer1.uInterpolation.value = value;
-        // re-compute shaders
-        var fs = new AMI.LayerFragmentShader(uniformsLayer1);
-        materialLayer1.fragmentShader = fs.compute();
-        materialLayer1.needsUpdate = true;
-    });
+    var layer1Folder = overlayGUI.addFolder('Layer 1 (Lesion)');
     var layer1LutUpdate =
         layer1Folder.add(layer1, 'lut', lutLayer1.lutsAvailable());
     layer1LutUpdate.onChange(function(value) {
