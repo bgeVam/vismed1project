@@ -6,7 +6,7 @@ body{
 
 /* Split the screen in half */
 .header_split {
-  height: 5%;
+  height: 8%;
   width: 100%;
   position: fixed;
   z-index: 3;
@@ -21,16 +21,16 @@ body{
 
 /* Control the left side */
 .header_left {
-  right: 59%;
-  width: 42%;
+  right: 61%;
+  width: 39%;
   z-index:3;
 }
 
 /* Control the right side */
 .header_right {
-  right: 15%;
+  right: 20%;
   z-index:3;
-  width: 42%;
+  width: 39%;
 }
 
 /* Split the screen in half */
@@ -47,23 +47,23 @@ body{
 
 /* Control the left side */
 .left {
-  right: 59%;
-  width: 42%;
+  right: 61%;
+  width: 39%;
   z-index:2;
 }
 
 /* Control the right side */
 .right {
-  right: 15%;
+  right: 20%;
   z-index:2;
-  width: 42%;
+  width: 39%;
 }
 
 /* Control the toolbox */
 .my-gui-container {
   position: fixed;
   right: 0%;
-  width: 15%;
+  width: 20%;
   top: 0;
   z-index:2;
   background-color: #212121
