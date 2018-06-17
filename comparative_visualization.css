@@ -5,6 +5,35 @@ body{
 }
 
 /* Split the screen in half */
+.header_split {
+  height: 5%;
+  width: 100%;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  overflow: hidden;
+  padding-top: 5px;
+  padding-bottom: 0px;
+  background-color: #212121;
+  text-align: center;
+  font-size: 30px; 
+}
+
+/* Control the left side */
+.header_left {
+  right: 59%;
+  width: 42%;
+  z-index:3;
+}
+
+/* Control the right side */
+.header_right {
+  right: 15%;
+  z-index:3;
+  width: 42%;
+}
+
+/* Split the screen in half */
 .split {
   height: 100%;
   width: 100%;
@@ -25,7 +54,6 @@ body{
 
 /* Control the right side */
 .right {
-  /*position: fixed;*/
   right: 15%;
   z-index:2;
   width: 42%;

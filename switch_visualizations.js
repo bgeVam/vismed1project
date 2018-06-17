@@ -27,6 +27,8 @@ function loadOverlay() {
     hideHtmlElement('container_left');
     hideHtmlElement('container_right');
     hideHtmlElement('my-gui-container1');
+    hideHtmlElement('header_left');
+    hideHtmlElement('header_right');
     showHtmlElement('my-gui-container2');
     showHtmlElement('my-lut-container');
     showHtmlElement('my-lut-canvases-l0');
@@ -44,5 +46,7 @@ function loadJuxtaposition() {
     showHtmlElement('container_left');
     showHtmlElement('container_right');
     showHtmlElement('my-gui-container1');
+    showHtmlElement('header_left');
+    showHtmlElement('header_right');
     initJuxtaposition();
 }
