@@ -42,14 +42,18 @@ To start the application simply launch the index.html file in browser. The compa
 All images used in this application are provided by the [BrainWeb](http://brainweb.bic.mni.mcgill.ca/). Use the following curl snipped to download an image via post request:
 
 ```sh
-
-curl -o "file_#1.txt" -X POST  'http://brainweb.bic.mni.mcgill.ca/cgi/brainweb1' 
---data "do_download_alias=T2+ICBM+normal+1mm+pn0+rf0
-&download_for_real=%5BStart+download5D
-&format_value=minc
-&who_email=
-&who_institution=
-&who_name=
-&zip_value=none"
+curl -o "image.mnc" -X POST "http://brainweb.bic.mni.mcgill.ca/cgi/brainweb1" \
+--data $(cat <<EOF
+do_download_alias=T2\
++ICBM\
++normal\
++1mm\
++pn0\
++rf0\
+&download_for_real=%5BStart+download5D\
+&format_value=minc\
+&zip_value=none
+EOF
+)
 ```
 
